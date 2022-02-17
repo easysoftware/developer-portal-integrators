@@ -204,7 +204,7 @@
    "paths":{
       "/attachments/{id}.{format}":{
          "get":{
-            "summary":"Get Attachment",
+            "summary":"Get an Attachment",
             "tags":[
                "Attachment"
             ],
