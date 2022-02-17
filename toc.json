@@ -1,0 +1,41 @@
+{
+  "items": [
+    {
+      "type": "item",
+      "title": "Welcome to section for Integrators",
+      "uri": "/docs/welcome.md"
+    },
+    {
+      "type": "divider",
+      "title": "GraphQL Reference"
+    },
+    {
+      "type": "item",
+      "title": "Rest Api Reference",
+      "uri": "/docs/GraphQL Reference/REST-API-Reference.md"
+    },
+    {
+      "type": "divider",
+      "title": "REST API Reference"
+    },
+    {
+      "type": "item",
+      "title": "Rest Api Reference",
+      "uri": "/docs/REST API Reference/REST-API-Reference.md"
+    },
+    {
+      "type": "divider",
+      "title": "APIS"
+    },
+    {
+      "type": "item",
+      "title": "Easy Redmine API",
+      "uri": "/docs/REST API Reference/Reference.yaml"
+    },
+    {
+      "type": "item",
+      "title": "Easy Redmine API",
+      "uri": "/reference/Reference_test.yaml"
+    }
+  ]
+}
