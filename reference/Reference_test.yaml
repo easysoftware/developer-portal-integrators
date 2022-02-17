@@ -331,13 +331,13 @@ paths:
       operationId: attachFileToEntity
       description: Use this method to attach file to entity. <br/> 
        To successfully call a method, specify format of response (<i>format</i>) in the <b>Path</b> and attach paramethers in the <b>Body</b>.<br/> 
-       See the details about attach parameters bellow.
+       See the details about attach parameters bellow. <br/> 
+       // entity_type and entity_id correspond with entity the attachment
+          will be attached to // NA PROBRÁNÍ - VÝZNAM
       tags:
       - Attachment
       requestBody:
         required: true
-        description: entity_type and entity_id correspond with entity the attachment
-          will be attached to
         content:
           application/json:
             schema:
