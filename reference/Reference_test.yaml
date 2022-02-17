@@ -251,7 +251,7 @@ paths:
        To successfully call a method, specify format of response (<i> format</i> ) in the <b>Path</b>. <br/> 
        Request <b>Body</b> is the file content. <br/>
        Also, enter in the <b>Header</b> your preferred security format. <br/> 
-       This API method returns 201 status with several paramethers. Check description bellow.
+       This API method returns <b>201</b> status with several paramethers. Check description bellow.
       requestBody:
         description: Request body is the file content.
         required: true
@@ -329,9 +329,9 @@ paths:
     post:
       summary: Attach file to entity
       operationId: attachFileToEntity
-      description: Use this method to attach file to entity. 
-       To successfully call a method, specify format of response (<i> format</i> ) in the <b>Path</b>. <br/> 
-       
+      description: Use this method to attach file to entity. <br/> 
+       To successfully call a method, specify format of response (<i>format</i>) in the <b>Path</b> and attach paramethers in the <b>Body</b>.<br/> 
+       See the details about attach parameters bellow.
       tags:
       - Attachment
       requestBody:
@@ -360,15 +360,31 @@ paths:
           - xml
       responses:
         '200':
-          description: ok
+          description: Attach was successfull.
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '422':
           description: unprocessable entity
           content:
@@ -12465,12 +12481,15 @@ components:
       properties:
         entity_type:
           type: string
+          description: "Type of entity with you want to attach."
           example: Issue
         entity_id:
           type: integer
+          description: "ID of entity with you want to attach."
+          example: 12567
         attachments:
           type: array
-          description: Array of attachment tokens
+          description: Array of attachment tokens.
           xml:
             wrapped: true
           items:
