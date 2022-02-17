@@ -103,7 +103,7 @@ tags:
 - name: Version
   description: Milestones API
 paths:
-  "/attachments/{id}/{format}":
+  "/attachments/{id}.{format}":
     get:
       summary: Get attachment
       tags:
@@ -245,8 +245,15 @@ paths:
       summary: Upload file to server
       tags:
       - Attachment
+      operationId: uploadFileToServer
+      description: 
+       Use this method to upload file to server. <br/>
+       To successfully call a method, specify format of response (<i> format</i> ) in the <b>Path</b>. <br/> 
+       Request <b>Body</b> is the file content. <br/>
+       Also, enter in the <b>Header</b> your preferred security format. <br/> 
+       This API method returns 201 status with several paramethers. Check description bellow.
       requestBody:
-        description: Request body is the file content
+        description: Request body is the file content.
         required: true
         content:
           application/octet-stream:
@@ -255,7 +262,7 @@ paths:
               format: binary
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of response. Only allowed values are .json and .xml.
         in: path
         required: true
         schema:
@@ -265,7 +272,7 @@ paths:
           - xml
       responses:
         '201':
-          description: created
+          description: Succesfully upload.
           content:
             application/json:
               schema:
@@ -277,13 +284,29 @@ paths:
               schema:
                 "$ref": "#/components/schemas/UploadResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '422':
           description: unprocessable entity
           content:
@@ -305,6 +328,10 @@ paths:
   "/attach.{format}":
     post:
       summary: Attach file to entity
+      operationId: attachFileToEntity
+      description: Use this method to attach file to entity. 
+       To successfully call a method, specify format of response (<i> format</i> ) in the <b>Path</b>. <br/> 
+       
       tags:
       - Attachment
       requestBody:
@@ -12423,8 +12450,12 @@ components:
       properties:
         id:
           type: integer
+          description: "ID of the succesfully upload."
+          example: 17912
         token:
           type: string
+          description: "Token of the succesfully upload"
+          example: "sjAIOJmasdJQWEM"
       xml:
         name: upload
     AttachRequest:
