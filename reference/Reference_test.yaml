@@ -111,13 +111,13 @@ paths:
       operationId: getAttachment
       description: 
         Use this method to get an attachment based on your specification. <br/>
-        To successfully call a method, specify the format of response <i>format</i> and enter an ID of attachment (<i>id</i>) in the <b>Path</b>. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and enter an ID of attachment (<i>id</i>) in the <b>Path</b>. <br/>
         Also, enter in the <b>Header</b> your preferred security format. <br/>
         An object with all possible parameters is returned in the API call response. See the schema below.<br/>
       parameters:
       - name: id
         in: path
-        description: ID of the attachment..
+        description: ID of the attachment.
         required: true
         schema:
           type: integer
@@ -165,7 +165,7 @@ paths:
         '406':
           content:
             application/json:
-              schmema:
+              schema:
                 "$ref": "#/components/schemas/Error406"
           description: "Request was not be acceptable."
         '429':
@@ -228,7 +228,7 @@ paths:
         '406':
           content:
             application/json:
-              schmema:
+              schema:
                 "$ref": "#/components/schemas/Error406"
           description: "Request was not be acceptable."
         '429':
@@ -18381,7 +18381,7 @@ components:
         - statusCode
         - message
       type: object
-    Error406: 
+    Error406:
       properties:
         statusCode:
           example: 406
@@ -18389,16 +18389,16 @@ components:
           type: number
         errorCode:
           example: not.acceptable
-          description: "Request was not acceptable."
+          description: "Request was not be acceptable."
           type: string
-        message: 
+        message:
           example: "Request was not be acceptable."
           description: "Request was not be acceptable."
           type: string
       required:
         - statusCode
         - message
-      type: object
+      type: object      
     GroupApiRequest:
       properties:
         easy_external_id:
