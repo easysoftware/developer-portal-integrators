@@ -200,7 +200,7 @@ paths:
         example: json
       - name: id
         in: path
-        description: ID of Attachment
+        description: ID of Attachment.
         required: true
         schema:
           type: integer
@@ -350,7 +350,7 @@ paths:
               "$ref": "#/components/schemas/AttachRequest"
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of response. Only allowed values are .json and .xml.
         in: path
         required: true
         schema:
