@@ -12320,14 +12320,10 @@ paths:
       - Version
       parameters:
       - name: format
-        description: specify format of response
         in: path
         required: true
         schema:
-          type: string
-          enum:
-          - json
-          - xml
+          "$ref": "#/components/schemas/ResponseFormat"
       - name: project_id
         in: path
         description: ID of the project for the new milestone
@@ -19350,7 +19346,7 @@ components:
               description: Inherit time entry activities
       xml:
         name: project_template
-    ResponseFormat:
+    RequestFormat:
       properties:
         format:
           description: "Specify format of response."
