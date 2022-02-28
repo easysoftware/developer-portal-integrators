@@ -19350,6 +19350,15 @@ components:
               description: Inherit time entry activities
       xml:
         name: project_template
+    ResponseFormat:
+      properties:
+        format:
+          description: "Specify format of response."
+          type: string
+          enum:
+            - json
+            - xml
+          example: json
     RoleApiRequest:
       xml:
         name: role
