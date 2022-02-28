@@ -12315,7 +12315,12 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/projects/{project_id}/versions.{format}":
     post:
+      operationId: CreateVersion
       summary: Create Version
+      description: Use this method to create version. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and enter an ID of attachment (<i>id</i>) and ID of the project for the new milestone (<i>project_id</i>) in the <b>Path</b>. <br/>
+        An object with all possible parameters is returned in the API call response. <br/>
+        See the schema below.
       tags:
       - Version
       parameters:
@@ -12323,10 +12328,10 @@ paths:
         in: path
         required: true
         schema:
-          "$ref": "#/components/schemas/ResponseFormat"
+          "$ref": "#/components/schemas/RequestFormat"
       - name: project_id
         in: path
-        description: ID of the project for the new milestone
+        description: ID of the project for the new milestone.
         required: true
         schema:
           type: string
@@ -12345,7 +12350,7 @@ paths:
               "$ref": "#/components/schemas/VersionApiRequest"
       responses:
         '201':
-          description: created
+          description: New version was created.
           content:
             application/json:
               schema:
@@ -12357,13 +12362,29 @@ paths:
               schema:
                 "$ref": "#/components/schemas/VersionApiResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '422':
           description: unprocessable entity
           content:
@@ -20159,28 +20180,36 @@ components:
     VersionApiRequest:
       properties:
         name:
-          example: Next step into the future
           type: string
+          description: "Name of the new API version."
+          example: "Your new API name."
         description:
-          example: ''
           type: string
+          description: "Description of your new API version."
+          example: "This is my new API version description."
         effective_date:
           format: date
           type: string
         due_date:
+          type: string
           format: date
-          type: string
+          description: "Date of the due date."
+          example: "2012-04-21"
         wiki_page_title:
-          example: ''
           type: string
+          description: "Wiki title of the new API version."
+          example: "New Wiki title."
         status:
+          type: string
+          description: "Status of your API version. You can choose from *open, locked* and *closed*."
           example: open
           enum:
           - open
           - locked
           - closed
-          type: string
         sharing:
+          type: string
+          description: "Choose sharing options. You can choose from *none, descendants, hierarchy, tree* and *system*."
           example: none
           enum:
           - none
@@ -20188,9 +20217,10 @@ components:
           - hierarchy
           - tree
           - system
-          type: string
         default_project_version:
           type: boolean
+          description: "Choose if you want use default project version."
+          example: true
         easy_external_id:
           example: external-system-1
           type: string
