@@ -105,18 +105,25 @@ tags:
 paths:
   "/attachments/{id}.{format}":
     get:
-      summary: Get an Attachment
+      summary: Get attachment
       tags:
       - Attachment
+      operationId: getAttachment
+      description: 
+        Use this method to get an attachment based on your specification. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and enter an ID of attachment (<i>id</i>) in the <b>Path</b>. <br/>
+        Also, enter in the <b>Header</b> your preferred security format. <br/>
+        An object with all possible parameters is returned in the API call response. See the schema below.<br/>
       parameters:
       - name: id
         in: path
-        description: ID of Attachment
+        description: ID of the attachment.
         required: true
         schema:
           type: integer
+        example: 1931
       - name: format
-        description: specify format of response
+        description: Specify format of response. Only allowed values are .json and .xml.
         in: path
         required: true
         schema:
@@ -126,27 +133,43 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of Attachment
+          description: Details of the attachment
           content:
             application/json:
               schema:
                 type: object
                 properties:
                   attachment:
-                    "$ref": "#/components/schemas/AttachmentApiResponse"
+                    "$ref": "#/components/schemas/AttachmentResponse"
             application/xml:
               schema:
-                "$ref": "#/components/schemas/AttachmentApiResponse"
+                "$ref": "#/components/schemas/AttachmentResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '429':
-          description: rate limiting exceeded
+          description: Rate limiting exceeded.
           content:
             application/json:
               schema:
@@ -155,12 +178,18 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy Attachment
+      summary: Delete an attachment
       tags:
       - Attachment
+      operationId: deleteAttachment
+      description: Use this API call to simply delete the attachment. <br/>
+        To successfully call a method, specify the format of response <i>format</i> and enter an ID of attachment (<i>id</i>) in the <b>Path</b>. <br/>
+        Also, enter in the <b>Header</b> your preferred security format. <br/>
+        This API call returns only the status <b>204</b> and an OK message. <br/>
+        Before using this method, check that you have system permissions to use DELETE methods.
       parameters:
       - name: format
-        description: specify format of response
+        description:  Specify format of response. Only allowed values are .json and .xml.
         in: path
         required: true
         schema:
@@ -168,23 +197,40 @@ paths:
           enum:
           - json
           - xml
+        example: json
       - name: id
         in: path
-        description: ID of Attachment
+        description: ID of Attachment.
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: OK. Attachment was deleted.
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '429':
           description: rate limiting exceeded
           content:
@@ -199,8 +245,15 @@ paths:
       summary: Upload file to server
       tags:
       - Attachment
+      operationId: uploadFileToServer
+      description: 
+       Use this method to upload file to server. <br/>
+       To successfully call a method, specify format of response (<i> format</i> ) in the <b>Path</b>. <br/> 
+       Request <b>Body</b> is the file content. <br/>
+       Also, enter in the <b>Header</b> your preferred security format. <br/> 
+       This API method returns <b>201</b> status with several paramethers. Check description bellow.
       requestBody:
-        description: Request body is the file content
+        description: Request body is the file content.
         required: true
         content:
           application/octet-stream:
@@ -209,7 +262,7 @@ paths:
               format: binary
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of response. Only allowed values are .json and .xml.
         in: path
         required: true
         schema:
@@ -219,7 +272,7 @@ paths:
           - xml
       responses:
         '201':
-          description: created
+          description: Succesfully upload.
           content:
             application/json:
               schema:
@@ -231,13 +284,29 @@ paths:
               schema:
                 "$ref": "#/components/schemas/UploadResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '422':
           description: unprocessable entity
           content:
@@ -12319,31 +12388,39 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
 components:
   schemas:
-    Attachment:
+    AttachmentResponse:
       properties:
         id:
           type: integer
           readOnly: true
           example: 1
+          description: "ID of the attachment."
         filename:
           example: service-agreement.odt
           type: string
+          description: "Filename of the attachment."
         filesize:
           type: integer
-          example: '451564'
+          example: 48
+          description: "Filesize of the attachment."
         content_type:
           example: application/vnd.oasis.opendocument.text
           type: string
+          description: "Type of the attachment content."
         content_url:
           format: uri
           type: string
+          description: "Content URL."
         description:
           type: string
+          example: "This is attachment xxx."
+          description: "Attachment description."
         href_url:
           format: uri
           type: string
+          description: "Atachment URL in the HREF format."
         thumbnail_url:
-          description: if attachment is a thumbnailable? (its image?)
+          description: // NA OBJASNĚNÍ // if attachment is a thumbnailable? (its image?)
           format: uri
           type: string
         author:
@@ -12352,10 +12429,17 @@ components:
           properties:
             id:
               type: integer
-            name: {}
+              description: "Author ID."
+              example: 11183
+            name: 
+              type: string
+              description: "Name of the author."
+              example: "User_Name"
         created_on:
           format: date-time
           type: string
+          description: "Date and time when an attachment was created."
+          example: "2012-04-21T18:25:43-05:00"
       xml:
         name: attachment
     AttachmentApiResponse:
@@ -18275,6 +18359,78 @@ components:
           items:
             type: string
             example: cannot be blank
+    Error401: 
+      properties:
+        statusCode:
+          example: 401
+          description: "401"
+          type: number
+        errorCode:
+          example: access.unauthorized
+          description: "Access missing or invalid."
+          type: string
+        message: 
+          example: "Not authorized. Check your current system permissions."
+          description: "Not authorized. Check your current system permissions."
+          type: string
+      required:
+        - statusCode
+        - message
+      type: object
+    Error403: 
+      properties:
+        statusCode:
+          example: 403
+          description: "403"
+          type: number
+        errorCode:
+          example: access.unauthorized
+          description: "Access missing or invalid."
+          type: string
+        message: 
+          example: "Not authorized to access this resource. Check your current system permissions."
+          description: "Not authorized to access this resource. Check your current system permissions."
+          type: string
+      required:
+        - statusCode
+        - message
+      type: object
+    Error404: 
+      properties:
+        statusCode:
+          example: 404
+          description: "404"
+          type: number
+        errorCode:
+          example: not.found
+          description: "Access missing or invalid."
+          type: string
+        message: 
+          example: "The request could not be processed because resorce was not found."
+          description: "The request could not be processed because resorce was not found."
+          type: string
+      required:
+        - statusCode
+        - message
+      type: object
+    Error406:
+      properties:
+        statusCode:
+          example: 406
+          description: "406"
+          type: number
+        errorCode:
+          example: not.acceptable
+          description: "Request was not be acceptable."
+          type: string
+        message:
+          example: "Request was not be acceptable."
+          description: "Request was not be acceptable."
+          type: string
+      required:
+        - statusCode
+        - message
+      type: object
     GroupApiRequest:
       properties:
         easy_external_id:
