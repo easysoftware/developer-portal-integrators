@@ -392,13 +392,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     get:
-      summary: List of CustomFields
-      description: ''
+      summary: List of Custom Fields
+      operationId: getCustomFields
+      description: Use this endpoint to retrieve custom fields <br/>
+       In response you get all custom fields related to the project.
       tags:
       - Custom field
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of response
         in: path
         required: true
         schema:
@@ -408,7 +410,7 @@ paths:
           - xml
       responses:
         '200':
-          description: ok
+          description: Details of custom fields
           content:
             application/json:
               schema:
@@ -437,17 +439,20 @@ paths:
   "/custom_fields/{id}.{format}":
     get:
       summary: Get CustomField
+      operationId: getCustomField
+      description: Retrieve information of a specific custom field.<br/>
+       Use ID of the custom field to get its information.
       tags:
       - Custom field
       parameters:
       - name: id
         in: path
-        description: ID of CustomField
+        description: ID of the custom field
         required: true
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify format of the response
         in: path
         required: true
         schema:
@@ -457,7 +462,7 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of CustomField
+          description: Detail of a specified custom field
           content:
             application/json:
               schema:
@@ -487,11 +492,14 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update CustomField
+      operationId: updateCustomField
+      description: Update data of a specific custom field.<br/>
+       Use this enpoint if you want to update definition of a specific custom field.
       tags:
       - Custom field
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response
         in: path
         required: true
         schema:
@@ -501,7 +509,7 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of CustomField
+        description: ID of the custom field
         required: true
         schema:
           type: integer
@@ -520,7 +528,7 @@ paths:
               "$ref": "#/components/schemas/CustomFieldApiRequest"
       responses:
         '204':
-          description: ok
+          description: Successfully updated
         '401':
           description: not authorized
         '403':
@@ -548,12 +556,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy CustomField
+      summary: Delete a custom field
+      operationId: deleteCustomField
+      description: Delete a custom field.<br/>
+       Use this endpoint to remove a custom field.
       tags:
       - Custom field
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response
         in: path
         required: true
         schema:
@@ -563,13 +574,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of CustomField
+        description: ID of the custom field
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Successfully deleted
         '401':
           description: not authorized
         '403':
