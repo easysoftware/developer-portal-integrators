@@ -12505,12 +12505,12 @@ components:
       properties:
         name:
           type: string
-          example: auta
-          description: Name of custom field
+          example: "Your custom field name."
+          description: Name of the custom field.
         field_format:
           type: string
-          example: list
-          description: Format
+          example: user
+          description: "Format of the custom field. Choose from the list bellow."
           enum:
           - string
           - text
@@ -12540,66 +12540,76 @@ components:
           - flag
         regexp:
           type: string
-          description: Regular expression
+          description: Regular expression.
         min_length:
           type: integer
-          description: Minimum length
+          description: Minimum length of the custom field.
         max_length:
           type: integer
-          description: Maximum length
+          description: Maximum length of the custom field.
         is_required:
           type: boolean
-          description: Required
+          description: "Choose if the custom field is required or not"
+          example: true
         is_for_all:
           type: boolean
-          description: For all projects
+          description: "Choose if the custom field is for all or not."
+          example: true
         is_filter:
           type: boolean
-          description: Used as a filter
+          description: "Choose if the custom field is used as filter."
+          example: true
         position:
           type: integer
           example: 2
-          description: Position of custom field in list
+          description: "Position of custom field in list."
         searchable:
           type: boolean
-          description: is searchable ?
+          description: "Choose if the custom field is searchable."
+          example: true
         default_value:
           type: string
-          description: Default value
+          description: Custom field default value.
         editable:
           type: boolean
-          description: Editable
+          description: "Choose if the custom field is editable."
+          example: true
         visible:
           type: boolean
-          description: Visible
+          description: "Choose if the custom field is editable."
+          example: true
         multiple:
           type: boolean
-          description: Multiple values
+          description: "Choose if is possible to use multiple values."
+          example: true
         description:
           type: string
-          description: Description
+          description: "Custom field description."
         is_primary:
           type: boolean
-          description: Primary
+          description: "Choose if the custom field is primary or not."
+          example: true
         show_empty:
           type: boolean
-          description: Show with empty fields
+          description: "Choose if the custom field will be show as empty fields."
+          example: true
         show_on_list:
           type: boolean
-          description: Show in list
+          description: "Choose if custom field is show on list."
+          example: true
         settings:
           type: string
           description: Its Hash object
         internal_name:
           type: string
-          description: ''
+          description: "Custom field internal name."
         show_on_more_form:
           type: boolean
-          example: 'true'
-          description: Show as additional attribute
+          example: true
+          description: Choose if custom field is show as additional attribute.
         easy_external_id:
           type: string
-          description: ''
+          description: "Easy external ID of the custom fields."
         easy_min_value:
           type: number
           format: float
@@ -12610,8 +12620,8 @@ components:
           description: ''
         mail_notification:
           type: boolean
-          example: 'true'
-          description: Email notifications
+          example: true
+          description: Choose if the mail notification will be send to you.
         easy_group_id:
           type: integer
           description: ''
@@ -12820,6 +12830,7 @@ components:
       properties:
         id:
           type: integer
+          description: ""
           readOnly: true
           example: 1
         name:
@@ -12861,7 +12872,7 @@ components:
           - flag
           type: string
         value:
-          description: value is based on field_format - can be Array, Boolean, Date
+          description: Value is based on field_format - can be Array, Boolean or Date.
           type: string
       xml:
         name: custom_field_value
@@ -18887,19 +18898,26 @@ components:
       properties:
         id:
           type: integer
+          description: "ID of the journal."
         user:
           type: object
           properties:
             id:
               type: integer
-            name: {}
+              description: "ID of the user."
+            name:
+              type: string
+              description: "Name of the user."
         notes:
           type: string
+          description: "Journal notes."
         created_on:
           format: date-time
+          description: "Date and time when journal was created."
           type: string
         private_notes:
           type: boolean
+          description: "Journal private notes."
         details:
           type: array
           xml:
@@ -18910,12 +18928,16 @@ components:
             properties:
               property:
                 type: string
+                description: "Journals property."
               name:
                 type: string
+                description: "Journals name."
               old_value:
                 type: string
+                description: "Journals old value."
               new_value:
                 type: string
+                description: "Journals new value."
       title: Journal
       type: object
       readOnly: true
@@ -19991,10 +20013,12 @@ components:
         id:
           type: integer
           readOnly: true
+          description: "ID of the user API."
           example: 1
         easy_external_id:
           example: external-system-1
           type: string
+          description: "External ID of the user API."
         login:
           example: admin
           type: string
@@ -20222,12 +20246,17 @@ components:
           description: "Choose if you want use default project version."
           example: true
         easy_external_id:
-          example: external-system-1
           type: string
+          description: "ID of Easy external system."
+          example: external-system-1
         project_id:
           type: integer
+          description: "ID of the project."
+          example: 1002
         easy_version_category_id:
           type: integer
+          description: "ID of Easy version category."
+          example: 1003
         custom_fields:
           type: array
           items:
@@ -20239,30 +20268,41 @@ components:
         id:
           type: integer
           readOnly: true
+          description: "ID of the API version."
           example: 1
         name:
-          example: Next step into the future
           type: string
+          description: "Your name of the API version"
+          example: "My API version name."
         description:
-          example: ''
           type: string
+          description: "Description of the API version."
+          example: "My API description."
         effective_date:
           format: date
           type: string
+          description: "Effective date of the API version."
+          example: 2021-10-12
         due_date:
           format: date
           type: string
+          description: "Due date of the API version."
+          example: 2021-05-15
         wiki_page_title:
-          example: ''
           type: string
+          description: "Title of the Wiki page."
+          example: "My Wiki title."
         status:
+          type: string
+          description: "Status of your API version. You can choose from *open, locked* and *closed*."
           example: open
           enum:
           - open
           - locked
           - closed
-          type: string
         sharing:
+          type: string
+          description: "Choose sharing options. You can choose from *none, descendants, hierarchy, tree* and *system*."
           example: none
           enum:
           - none
@@ -20270,22 +20310,26 @@ components:
           - hierarchy
           - tree
           - system
-          type: string
         default_project_version:
           type: boolean
+          description: "Choose if you want use default project version."
+          example: true
         easy_external_id:
-          example: external-system-1
           type: string
+          description: "ID of Easy external system."
+          example: external-system-1
         project:
           type: object
           readOnly: true
           properties:
             id:
               type: integer
+              description: "ID of the project."
               xml:
                 attribute: true
             name:
               type: string
+              description: "Name of the project."
               xml:
                 attribute: true
         easy_version_category:
@@ -20294,10 +20338,12 @@ components:
           properties:
             id:
               type: integer
+              description: "Easy version category ID."
               xml:
                 attribute: true
             name:
               type: string
+              description: "Easy version category name."
               xml:
                 attribute: true
         custom_fields:
@@ -20315,10 +20361,12 @@ components:
             "$ref": "#/components/schemas/JournalApiResponse"
         created_on:
           type: string
+          description: "Date and time when journals was created."
           format: date-time
           readOnly: true
         updated_on:
           type: string
+          description: "Date and time when journals was updated."
           format: date-time
           readOnly: true
       xml:
