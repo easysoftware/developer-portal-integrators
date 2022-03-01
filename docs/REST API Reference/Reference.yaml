@@ -11881,17 +11881,22 @@ paths:
   "/users/{id}.{format}":
     get:
       summary: Get User
+      operationId: GetUser
+      description: Use this method to get user. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the user (<i>id</i>) in the <b>Path</b> and explicitly specify the associations you want to be included in the query result (<i>include</i>) into the <b>Query</b></b>.<br/>
+        An object with all possible parameters is returned in the API call response. <br/>
+        See the schema below.
       tags:
       - User
       parameters:
       - name: id
         in: path
-        description: ID of User
+        description: ID of the user.
         required: true
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11901,10 +11906,9 @@ paths:
           - xml
       - name: include
         description: |-
-          explicitly specify the associations you want to be included in the query result (separated by a comma)
-
-          * **groups** (groups which user is in)
-          * **memberships** (list of projects which is user in role)
+          Explicitly specify the associations you want to be included in the query result (separated by a comma):
+          * **Groups** (*groups which user is in*)
+          * **Memberships** (*list of projects which is user in role*)
         in: query
         schema:
           type: array
@@ -11915,7 +11919,7 @@ paths:
             - memberships
       responses:
         '200':
-          description: detail of User
+          description: Details of the user.
           content:
             application/json:
               schema:
@@ -11927,13 +11931,29 @@ paths:
               schema:
                 "$ref": "#/components/schemas/UserApiResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '429':
           description: rate limiting exceeded
           content:
@@ -12058,12 +12078,15 @@ paths:
   "/versions.{format}":
     get:
       summary: List of Versions
-      description: For filtering send parameter `set_filter=1` and specify filters
+      description: Use this method to get list of all versions details. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the version (<i>id</i>) in the <b>Path</b> and specify parameters into the <b>Query</b>.<br/>
+        An object with all possible parameters is returned in the API call response. <br/>
+        See the schema below.
       tags:
       - Version
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -12072,23 +12095,23 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of the current entity.
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        description: Enable or disable filter through Easy Query.
         in: query
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: The number of items to be present in the response. Default value is
+          25, maximum is 100.
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: The offset of the first object to retrieve.
         in: query
         schema:
           type: integer
@@ -12105,16 +12128,19 @@ paths:
                 properties:
                   total_count:
                     type: number
+                    description: "Total count of the versions."
                     example: 75
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: "Versions offset count."
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: "Versions limit count."
                     example: 25
                     xml:
                       attribute: true
@@ -12149,7 +12175,11 @@ paths:
                     items:
                       "$ref": "#/components/schemas/VersionApiResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
   "/versions/{id}.{format}":
     get:
       summary: Get Version
@@ -12224,11 +12254,16 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update Version
+      operationId: UpdateFormat
+      description: Use this method to update version details. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the version (<i>id</i>) in the <b>Path</b> and all paramethers you want to update into the <b>Header</b>.<br/>
+        An object with all possible parameters is returned in the API call response. <br/>
+        See the schema below.
       tags:
       - Version
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -12238,7 +12273,7 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of Version
+        description: ID of the version.
         required: true
         schema:
           type: integer
@@ -12269,13 +12304,29 @@ paths:
               schema:
                 "$ref": "#/components/schemas/VersionApiResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '422':
           description: unprocessable entity
           content:
@@ -12295,12 +12346,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy Version
+      summary: Delete Version
+      operationId: DeleteVersion
+      description: Use this method to delete version details. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the version (<i>id</i>) in the <b>Path</b><br/>
       tags:
       - Version
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -12310,21 +12364,37 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of Version
+        description: ID of the version.
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Successfully deleted.
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '429':
           description: rate limiting exceeded
           content:
@@ -12346,10 +12416,14 @@ paths:
       - Version
       parameters:
       - name: format
+        description: Specify format of response.
         in: path
         required: true
         schema:
-          "$ref": "#/components/schemas/RequestFormat"
+          type: string
+          enum:
+          - json
+          - xml
       - name: project_id
         in: path
         description: ID of the project for the new milestone.
@@ -12840,10 +12914,11 @@ components:
       properties:
         id:
           type: integer
+          description: "ID of the custom field."
           example: 1
         value:
-          example: Iron Man
-          description: value is based on field_format - can be Array, Boolean, Date
+          example: My custom field.
+          description: Value is based on field_format - can be Array, Boolean, Date.
           type: string
       xml:
         name: custom_field_value
@@ -19410,15 +19485,6 @@ components:
               description: Inherit time entry activities
       xml:
         name: project_template
-    RequestFormat:
-      properties:
-        format:
-          description: "Specify format of response."
-          type: string
-          enum:
-            - json
-            - xml
-          example: json
     RoleApiRequest:
       xml:
         name: role
@@ -20042,18 +20108,23 @@ components:
           description: "External ID of the user API."
         login:
           example: admin
+          description: "User login name."
           type: string
         firstname:
+          description: "User firstname."
           example: Filip
           type: string
         lastname:
+          description: "User lastname."
           example: Moravek
           type: string
         mail:
+          description: "User email."
           format: email
           example: ceo@easy.cz
           type: string
         status:
+          description: "User status."
           type: integer
           example: 1
           enum:
@@ -20062,7 +20133,7 @@ components:
           - 3
         easy_system_flag:
           type: boolean
-          description: used for special operations, not human user
+          description: Used for special operations. Not for common user.
         easy_lesser_admin:
           type: boolean
           description: Partial administrator
@@ -20077,10 +20148,12 @@ components:
           properties:
             id:
               type: integer
+              description: "ID of the Easy user."
               xml:
                 attribute: true
             name:
               type: string
+              description: "Name of the Easy user."
               xml:
                 attribute: true
         supervisor_user:
@@ -20089,10 +20162,12 @@ components:
           properties:
             id:
               type: integer
+              description: "ID of the supervisor user."
               xml:
                 attribute: true
             name:
               type: string
+              description: "Name of the supervisor user."
               xml:
                 attribute: true
         custom_fields:
@@ -20103,7 +20178,7 @@ components:
             "$ref": "#/components/schemas/CustomFieldValueApiResponse"
         tag_list:
           type: array
-          description: List of tags associated with entity
+          description: List of tags associated with entity.
           example:
           - deployment
           - gantt
@@ -20113,13 +20188,15 @@ components:
         utc_offset:
           type: integer
           example: 3600
-          description: Time zone offset in seconds
+          description: Time zone offset in seconds.
           readOnly: true
         last_login_on:
           type: string
+          description: "Last date and time when user was login on."
           format: date-time
         avatar_url:
           type: string
+          description: "URL link to user avatar."
           format: uri
         working_time_calendar:
           type: object
@@ -20127,19 +20204,24 @@ components:
           properties:
             id:
               type: integer
+              description: "ID of the working calendar."
+              example: 12
             name:
               type: string
+              description: "Name of the working calendar."
+              example: My calendar
             default_working_hours:
               type: number
+              description: "Default working hours of the user."
               format: float
-              example: '8.0'
+              example: 8.0
             time_from:
               type: string
-              description: Time when work start
+              description: Time when the user start work.
               example: '09:00'
             time_to:
               type: string
-              description: Time when work end
+              description: Time when the user end work.
               example: '17:00'
         groups:
           type: array
@@ -20151,8 +20233,10 @@ components:
             properties:
               id:
                 type: integer
+                description: "ID of the group."
               name:
                 type: string
+                description: "Name of the group."
         memberships:
           type: array
           description: if you specify `include=memberships`
@@ -20164,13 +20248,16 @@ components:
             properties:
               id:
                 type: integer
+                description: "Membership ID."
               project:
                 type: object
                 properties:
                   id:
                     type: integer
+                    description: "Project ID."
                   name:
                     type: string
+                    description: "Project name."
               roles:
                 type: array
                 items:
@@ -20179,37 +20266,37 @@ components:
                   properties:
                     id:
                       type: integer
+                      description: "Role ID."
                     name:
                       type: string
+                      description: "Role name."
                     inherited:
                       type: boolean
-                      description: only if inherited_from.present?
         created_on:
           type: string
+          description: "Date and time when user was created."   "
           format: date-time
-          readOnly: true
+          readOnly: 
         updated_on:
           type: string
+          description: Date and time when user was updated.
           format: date-time
-          readOnly: true
-        easy_gantt_resources_estimated_ratio:
+          readOnly: truetrue
+    easy_gantt_resources_estimated_ratio:
           type: number
           format: float
-          description: "(available if the user is allowed to manage Easy Gantt Resource
-            user attributes)"
-          example: '1.0'
-        easy_gantt_resources_hours_limit:
+          example: 1.01.0'
+    easy_gantt_resources_hours_limit:
           type: number
           format: float
-          description: "(available if the user is allowed to manage Easy Gantt Resource
-            user attributes)"
-          example: '1.0'
+          description: Available if the user is allowed to manage Easy Gantt Resource user attributes.
+          example: 1.01.0'
         easy_gantt_resources_advance_hours_limits:
           type: array
           xml:
             wrapped: true
-          description: Should contain 7 values, one per each day of the week. (Available
-            if the user is allowed to manage Easy Gantt Resource user attributes.)
+          description: Should contain 7 values, one per each day of the wek. (Available
+            if the user is allowed to manage Easy Gantt Resource user attribues.)
           example:
           - 8
           - 8
@@ -20217,11 +20304,7 @@ components:
           - 8
           - 8
           - 0
-          - 0
-          items:
-            "$ref": "#/components/schemas/EasyGanttResourcesAdvanceHoursLimit"
-      xml:
-        name: user
+         user
     VersionApiRequest:
       properties:
         name:
