@@ -1045,12 +1045,14 @@ paths:
   "/easy_attendances.{format}":
     get:
       summary: List of EasyAttendances
-      description: For filtering send parameter `set_filter=1` and specify filters
+      operationId: getAttendances
+      description: Lists all easy attendances.<br/>
+        For filtering send parameter `set_filter=1` and specify filters
       tags:
       - Easy attendance
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1059,29 +1061,32 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of current entity
+        example: john doe
         in: query
         schema:
           type: string
       - name: set_filter
         description: enable filter through Easy Query
         in: query
+        example: true
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: Limits the number of returned results. Minimum is 25, maximum is 100.
         in: query
+        example: 100
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: Offset from the first record to retrieve
         in: query
+        example: 50
         schema:
           type: integer
       responses:
         '200':
-          description: ok
+          description: List of attendances
           content:
             application/json:
               schema:
@@ -1093,20 +1098,24 @@ paths:
                   total_count:
                     type: number
                     example: 75
+                    description: Total count of attendances
                     xml:
                       attribute: true
                   offset:
                     type: number
                     example: 0
+                    description: Offset from the first record to retrieve
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: Limit applied to this request. It describes the maximum number of results returned in the response.
                     example: 25
                     xml:
                       attribute: true
                   easy_attendances:
                     type: array
+                    description: List of all attendances
                     items:
                       "$ref": "#/components/schemas/EasyAttendanceApiResponse"
             application/xml:
@@ -1118,32 +1127,38 @@ paths:
                 properties:
                   total_count:
                     type: number
+                    description: Total count of attendances
                     example: 75
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: Offset from the first record to retrieve
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: Limit applied to this request. It describes the maximum number of results returned in the response.
                     example: 25
                     xml:
                       attribute: true
                   easy_attendances:
                     type: array
+                    description: List of all attendances
                     items:
                       "$ref": "#/components/schemas/EasyAttendanceApiResponse"
         '401':
           description: not authorized
     post:
       summary: Create EasyAttendance
+      description: Use this endpoint to create an attendance entry.
+      operationId: createAttendance
       tags:
       - Easy attendance
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1152,7 +1167,7 @@ paths:
           - json
           - xml
       requestBody:
-        description: Create EasyAttendance
+        description: Create EasyAttendance request body
         required: true
         content:
           application/json:
@@ -1166,7 +1181,7 @@ paths:
               "$ref": "#/components/schemas/EasyAttendanceApiRequest"
       responses:
         '201':
-          description: created
+          description: Successfully created attendance entry
           content:
             application/json:
               schema:
