@@ -12565,12 +12565,12 @@ components:
           example: 1
         name:
           type: string
-          example: auta
-          description: Name of custom field
+          example: Custom identifier
+          description: Name of the custom field
         field_format:
           type: string
           example: list
-          description: Format
+          description: Data type of the custom field
           enum:
           - string
           - text
