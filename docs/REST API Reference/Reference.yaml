@@ -12600,53 +12600,68 @@ components:
           - flag
         regexp:
           type: string
-          description: Regular expression
+          description: Regular expression to be applied to the entry in the custom field
+          example: ([+]?\d{1,3}[. \s]?)?(\d{9}?)
         min_length:
           type: integer
-          description: Minimum length
+          description: Minimum length of the entry in the custom field
+          example: 3
         max_length:
           type: integer
-          description: Maximum length
+          description: Maximum length of the entry in the custom field
+          example: 15
         is_required:
           type: boolean
-          description: Required
+          description: Whether the field is required
+          example: true
         is_for_all:
           type: boolean
-          description: For all projects
+          description: Whether the field will be visible in all projects
+          example: true
         is_filter:
           type: boolean
-          description: Used as a filter
+          description: Whether the field can be usesed as a filter
+          example: true
         position:
           type: integer
           example: 2
           description: Position of custom field in list
         searchable:
           type: boolean
-          description: is searchable ?
+          description: Whether the field can be used for search
+          example: true
         default_value:
           type: string
-          description: Default value
+          description: Default value of the field if not filled in
+          example: John Doe
         editable:
           type: boolean
-          description: Editable
+          description: Whether the field is editable
+          example: true
         visible:
           type: boolean
-          description: Visible
+          description: Whether the field is visible in forms
+          example: true
         multiple:
           type: boolean
-          description: Multiple values
+          description: Whether the field can have multiple values
+          example: true
         description:
           type: string
-          description: Description
+          description: Description shown to the user
+          example: Custom identifier of the user within system
         is_primary:
           type: boolean
           description: Primary
+          example: true
         show_empty:
           type: boolean
           description: Show with empty fields
+          example: true
         show_on_list:
           type: boolean
           description: Show in list
+          example: true
         settings:
           type: string
           description: Its Hash object
@@ -12655,7 +12670,7 @@ components:
           description: ''
         show_on_more_form:
           type: boolean
-          example: 'true'
+          example: true
           description: Show as additional attribute
         easy_external_id:
           type: string
@@ -12670,14 +12685,14 @@ components:
           description: ''
         mail_notification:
           type: boolean
-          example: 'true'
+          example: true
           description: Email notifications
         easy_group_id:
           type: integer
           description: ''
         clear_when_anonymize:
           type: boolean
-          description: Clear when anonymize
+          description: Whether the field should be clear due to data anonymization (e.g. GDPR requests for data deletion)
         type:
           type: string
           example: IssueCustomField
@@ -12705,17 +12720,17 @@ components:
           readOnly: true
         non_deletable:
           type: boolean
-          example: 'false'
-          description: ''
+          example: false
+          description: Whether the value in the field cannot be deleted
           readOnly: true
         non_editable:
           type: boolean
-          example: 'false'
-          description: ''
+          example: false
+          description: Whether the field is not editable
           readOnly: true
         disabled:
           type: boolean
-          example: 'false'
+          example: false
           description: ''
           readOnly: true
         created_at:
@@ -12786,9 +12801,11 @@ components:
           - easy_computed_token
           - flag
           type: string
+          example: list
         value:
           description: value is based on field_format - can be Array, Boolean, Date
           type: string
+          example: Iron man
       xml:
         name: custom_field_value
     DocumentApiRequest:
