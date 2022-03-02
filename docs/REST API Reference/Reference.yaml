@@ -11706,12 +11706,16 @@ paths:
   "/users.{format}":
     get:
       summary: List of Users
-      description: For filtering send parameter `set_filter=1` and specify filters
+      description: Use this method to update user. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>)  in the <b>Path</b> and all necessary parameters into the <b>Query</b>.<br/>
+        An object with all possible parameters is returned in the API call response. <br/>
+        See the schema below.
+      operationId: ListOfUsers
       tags:
       - User
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11720,32 +11724,31 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of current entity.
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        description: Enable filter through Easy Query.
         in: query
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: The number of items to be present in the response. Default value is
+          25, maximum is 100.
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: The offset of the first object to retrieve.
         in: query
         schema:
           type: integer
       - name: include
         description: |-
-          explicitly specify the associations you want to be included in the query result (separated by a comma)
-
-          * **groups** (groups which user is in)
-          * **memberships** (list of projects which is user in role)
+          Explicitly specify the associations you want to be included in the query result (separated by a comma)
+          * **Groups** (groups which user is in)
+          * **Memberships** (list of projects which is user in role)
         in: query
         schema:
           type: array
@@ -11756,7 +11759,7 @@ paths:
             - memberships
       responses:
         '200':
-          description: ok
+          description: OK
           content:
             application/json:
               schema:
@@ -11767,6 +11770,7 @@ paths:
                 properties:
                   total_count:
                     type: number
+                    description: "Total user count."
                     example: 75
                     xml:
                       attribute: true
@@ -11811,14 +11815,23 @@ paths:
                     items:
                       "$ref": "#/components/schemas/UserApiResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
     post:
       summary: Create User
+      operationId: CreateUser
+      description: Use this method to update user. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>)  in the <b>Path</b> and fill all possible parameters into the<b>Body</b>.<br/>
+        An object with all possible parameters is returned in the API call response. <br/>
+        See the schema below.
       tags:
       - User
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11827,7 +11840,7 @@ paths:
           - json
           - xml
       requestBody:
-        description: Create User
+        description: User paramethers
         required: true
         content:
           application/json:
@@ -11841,7 +11854,7 @@ paths:
               "$ref": "#/components/schemas/UserApiRequest"
       responses:
         '201':
-          description: created
+          description: User was created.
           content:
             application/json:
               schema:
@@ -11853,13 +11866,29 @@ paths:
               schema:
                 "$ref": "#/components/schemas/UserApiResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '422':
           description: unprocessable entity
           content:
@@ -11965,6 +11994,11 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update User
+      operationId: UpdateUser
+      description: Use this method to update user. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the user (<i>id</i>) in the <b>Path</b> and explicitly specify the associations you want to be included in the query result (<i>include</i>) into the <b>Query</b></b>.<br/>
+        An object with all possible parameters is returned in the API call response. <br/>
+        See the schema below.
       tags:
       - User
       parameters:
@@ -11984,7 +12018,7 @@ paths:
         schema:
           type: integer
       requestBody:
-        description: Update given User
+        description: Paramethers to update.
         required: true
         content:
           application/json:
@@ -11998,7 +12032,7 @@ paths:
               "$ref": "#/components/schemas/UserApiRequest"
       responses:
         '200':
-          description: updated
+          description: User was successfully updated.
           content:
             application/json:
               schema:
@@ -12010,13 +12044,29 @@ paths:
               schema:
                 "$ref": "#/components/schemas/UserApiResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '422':
           description: unprocessable entity
           content:
@@ -12036,12 +12086,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy User
+      summary: Delete User
+      operationId: DeleteUser
+      description: Use this method to update user. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the user (<i>id</i>) in the <b>Path</b> 
       tags:
       - User
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -12051,21 +12104,37 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of User
+        description: ID of the user.
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: User was deleted.
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '429':
           description: rate limiting exceeded
           content:
@@ -12187,7 +12256,7 @@ paths:
       description:  Use this method to get current version details. <br/>
         To successfully call a method, specify the format of response (<i>format</i>) and ID of the version (<i>id</i>) in the <b>Path</b>.<br/>
         An object with all possible parameters is returned in the API call response. <br/>
-        See the schema below.
+        See the schema below..
       tags:
       - Version
       parameters:
