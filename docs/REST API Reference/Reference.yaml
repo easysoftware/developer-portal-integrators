@@ -12970,8 +12970,8 @@ components:
                 attribute: true
             name:
               type: string
-              description: Name of the author/initiator of the export
               example: John Doe
+              description: Name of the author/initiator of the export
               xml:
                 attribute: true
         created_at:
