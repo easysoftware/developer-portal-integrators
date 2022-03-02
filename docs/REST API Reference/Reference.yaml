@@ -12390,14 +12390,15 @@ components:
           readOnly: true
           example: 1
           description: ID of the attachment in Easy Software
-        schema:
-         "$ref": "#/components/schemas/Attachment"
+          "$ref": "#/components/schemas/Attachment"
       xml:
         name: attachment
     UploadResponse:
       properties:
         id:
           type: integer
+          example: 1
+          description: ID of the uploaded file
         token:
           type: string
       xml:
@@ -12901,6 +12902,7 @@ components:
           type: string
         documents:
           type: array
+          description: List of documents related to the project
           items:
             "$ref": "#/components/schemas/DocumentApiResponse"
       title: DocumentsGroup
@@ -19126,15 +19128,20 @@ components:
     ProjectDocumentApiRequest:
       properties:
         title:
-          example: ''
+          example: Project outline.docx
+          description: Name of the document
           type: string
         description:
-          example: ''
+          example: This document describes the project outline
+          description: Description of the document shown to the user
           type: string
         category_id:
           type: integer
+          description: ID of the category the document is related to
+          example: 3
         custom_fields:
           type: array
+          description: List of custom fields related to the document
           items:
             "$ref": "#/components/schemas/CustomFieldValueApiRequest"
       required:
