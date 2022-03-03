@@ -1345,11 +1345,13 @@ paths:
   "/easy_checklist_items.{format}":
     post:
       summary: Create EasyChecklistItem
+      operationId: createCheclistItem
+      description: Create a new checklist item. Checklist item created this way can be found in the specified checklist.
       tags:
       - Easy checklist item
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1358,7 +1360,7 @@ paths:
           - json
           - xml
       requestBody:
-        description: Create EasyChecklistItem
+        description: Request body to create EasyChecklistItem
         required: true
         content:
           application/json:
@@ -1372,7 +1374,7 @@ paths:
               "$ref": "#/components/schemas/EasyChecklistItemApiRequest"
       responses:
         '201':
-          description: created
+          description: Successfully created checklist item
           content:
             application/json:
               schema:
@@ -1412,11 +1414,13 @@ paths:
   "/easy_checklist_items/{id}.{format}":
     put:
       summary: Update EasyChecklistItem
+      description: Update a specific checklist item. The updated checklist item can be found in the specified checklist
+      operationId: updateChecklistItem
       tags:
       - Easy checklist item
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
