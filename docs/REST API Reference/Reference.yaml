@@ -1220,7 +1220,7 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/easy_attendances/{id}.{format}":
     get:
-      summary: Get EasyAttendance
+      summary: Get EasyAttendance record
       operationId: getAttandance
       description: Get a single record of EasyAttandance.
       tags:
@@ -1272,12 +1272,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
-      summary: Update EasyAttendance
+      summary: Update EasyAttendance record
+      description: Use this endpoint to update details of a EasyAttendance record.<br/>
+        You can update record completely or just partialy. Keep in mind that some custom fields may not be updated due to their settings.
+      operationId: updateAttendance
       tags:
       - Easy attendance
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1287,12 +1290,12 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of EasyAttendance
+        description: ID of EasyAttendance record
         required: true
         schema:
           type: integer
       requestBody:
-        description: Update given EasyAttendance
+        description: Body of a specific EasyAttendance to be updated
         required: true
         content:
           application/json:
@@ -1306,7 +1309,7 @@ paths:
               "$ref": "#/components/schemas/EasyAttendanceApiRequest"
       responses:
         '200':
-          description: updated
+          description: Successfully updated EasyAttendnace record
           content:
             application/json:
               schema:
@@ -1344,12 +1347,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy EasyAttendance
+      summary: Delete EasyAttendance record
+      description: Use this endpoint to completely delete an EasyAttandance record.<br/>
+       Keep in mind that some custom fields may not be updated due to their settings.
+      operationId: deleteAttendance
       tags:
       - Easy attendance
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1365,7 +1371,7 @@ paths:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Successfully deleted EasyAttendance record
         '401':
           description: not authorized
         '403':
@@ -13009,21 +13015,26 @@ components:
       properties:
         user_id:
           type: integer
+          example: 15
+          description: ID of the user the attendance relates to
         arrival:
           type: string
           example: '2020-12-03T00:00:00Z'
-          description: ''
+          description: Datetime of the beginning of the attendance session
           format: datetime
         departure:
           type: string
           example: '2020-12-03T23:30:00Z'
-          description: ''
+          description: Datetime of the end of the attendance session
           format: datetime
         edited_by_id:
           type: integer
+          example: 3
+          description: ID of the user who updated the attendance record
         edited_when:
           type: string
-          description: ''
+          description: Datetime of the last time the attendance record was updated.
+          example: '2020-12-03T23:30:00Z'
           format: datetime
         locked:
           type: boolean
@@ -13031,10 +13042,14 @@ components:
           type: string
           format: date-time
           readOnly: true
+          example: '2020-12-03T23:30:00Z'
+          description: Datetime when the attendance record was created
         updated_at:
           type: string
           format: date-time
           readOnly: true
+          example: '2020-12-03T23:30:00Z'
+          description: Datetime when the attendance record was updated
         arrival_user_ip:
           type: string
           example: 79.98.112.115
@@ -13076,22 +13091,22 @@ components:
           type: boolean
         arrival_latitude:
           type: number
-          example: '50.04'
+          example: 50.04
           format: float
           readOnly: true
         arrival_longitude:
           type: number
-          example: '14.98'
+          example: 14.98
           format: float
           readOnly: true
         departure_latitude:
           type: number
-          example: '50.04'
+          example: 50.04
           format: float
           readOnly: true
         departure_longitude:
           type: number
-          example: '14.98'
+          example: 14.98
           format: float
           readOnly: true
         time_zone:
@@ -13108,9 +13123,10 @@ components:
           readOnly: true
         hours:
           type: number
-          example: '23.5'
+          example: 23.5
           format: float
           readOnly: true
+          description: Calculated number of hours of the attendance. Represents difference between 'arrival' and 'departure'
         easy_attendance_activity_id:
           type: integer
       required:
@@ -13125,27 +13141,33 @@ components:
           type: integer
           readOnly: true
           example: 1
+          description: ID of the attendance entry
         user:
           type: object
           readOnly: true
+          description: Object containing user information
           properties:
             id:
               type: integer
+              description: ID of the user in Easy Software related to the attendance
+              example: 15
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the user in Easy Software related to the attendance
+              example: John Deere
               xml:
                 attribute: true
         arrival:
           type: string
           example: '2020-12-03T00:00:00Z'
-          description: ''
+          description: Datetime of the beginning of the attendance session
           format: datetime
         departure:
           type: string
           example: '2020-12-03T23:30:00Z'
-          description: ''
+          description: Datetime of the end of the attendance session
           format: datetime
         edited_by:
           type: object
@@ -13153,25 +13175,34 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the user in Easy Software who edited the attendance
+              example: 14
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the user in Easy Software who edited the attendance
+              example: John Doe
               xml:
                 attribute: true
         edited_when:
           type: string
-          description: ''
+          description: Datetime when the attendance record was last edited
+          example: '2020-12-03T23:30:00Z'
           format: datetime
         locked:
           type: boolean
         created_at:
           type: string
           format: date-time
+          description: Datetime when the attendance record was created
+          example: '2020-12-03T23:30:00Z'
           readOnly: true
         updated_at:
           type: string
           format: date-time
+          example: '2020-12-03T23:30:00Z'
+          description: Datetime when the attendance record was updated 
           readOnly: true
         arrival_user_ip:
           type: string
@@ -13203,7 +13234,9 @@ components:
           type: string
         description:
           type: string
-        approval_status:
+          example: This attendance was regarding doctor visit
+          description: Description of the attendance shown to the user
+         approval_status:
           enum:
           - 1
           - 2
@@ -13219,37 +13252,42 @@ components:
           properties:
             id:
               type: integer
+              example: 17
+              description: ID of the user in Easy Software who approved the attendance
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the user in Easy Software who approved the attendance
+              example: John Doe
               xml:
                 attribute: true
         approved_at:
           type: string
-          description: ''
+          description: Datetime when the attendance record was approved
+          example: '2020-12-03T23:30:00Z'
           format: datetime
           readOnly: true
         previous_approval_status:
           type: boolean
         arrival_latitude:
           type: number
-          example: '50.04'
+          example: 50.04
           format: float
           readOnly: true
         arrival_longitude:
           type: number
-          example: '14.98'
+          example: 14.98
           format: float
           readOnly: true
         departure_latitude:
           type: number
-          example: '50.04'
+          example: 50.04
           format: float
           readOnly: true
         departure_longitude:
           type: number
-          example: '14.98'
+          example: 14.98
           format: float
           readOnly: true
         time_zone:
@@ -13266,11 +13304,13 @@ components:
           readOnly: true
         hours:
           type: number
-          example: '23.5'
+          example: 23.5
           format: float
           readOnly: true
+          description: Calculated number of hours of the attendance. Represents difference between 'arrival' and 'departure'
         easy_attendance_activity:
           type: object
+          description: Object of specific attendance activities related to the root attendance
           "$ref": "#/components/schemas/EasyAttendanceActivityApiResponse"
       xml:
         name: easy_attendance
@@ -13278,6 +13318,7 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the specific attendance activity
           readOnly: true
           example: 1
         name:
