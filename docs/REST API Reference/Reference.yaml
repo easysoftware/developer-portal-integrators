@@ -10665,12 +10665,16 @@ paths:
   "/test_cases.{format}":
     get:
       summary: List of TestCases
-      description: For filtering send parameter `set_filter=1` and specify filters
+      operationId: ListOfTestCases
+      description: Use this method to get list of test cases. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) in the <b>Path</b> and specific parameters into the <b>Query</b>. <br/>
+        As a response, you can see list of test cases. The number of test cases depends on <i>limit</i> parameters. <br/>
+        See the schema below.
       tags:
       - Test case
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10679,29 +10683,29 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of the current entity.
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        description: Enable filter through Easy Query.
         in: query
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: The number of items to be present in the response. Default is
+          25, maximum is 100.
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: The offset of the first object to retrieve.
         in: query
         schema:
           type: integer
       responses:
         '200':
-          description: ok
+          description: OK
           content:
             application/json:
               schema:
@@ -10713,15 +10717,18 @@ paths:
                   total_count:
                     type: number
                     example: 75
+                    description: Total count of test cases.
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: Test case offset.
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: Current limit of test cases.
                     example: 25
                     xml:
                       attribute: true
@@ -10739,16 +10746,19 @@ paths:
                   total_count:
                     type: number
                     example: 75
+                    description: Total count of test cases.
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: Test case offset.
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
                     example: 25
+                    description: Current limit of test cases.
                     xml:
                       attribute: true
                   test_cases:
@@ -10759,11 +10769,16 @@ paths:
           description: not authorized
     post:
       summary: Create TestCase
+      operationId: CreateTestCase
+      description: Use this method to create new test case. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) in the <b>Path</b> and fill all possible parameters to the <b>Body</b>. <br/>
+        As a response, you can see your created test case. <br/>
+        See the schema below.
       tags:
       - Test case
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10772,7 +10787,7 @@ paths:
           - json
           - xml
       requestBody:
-        description: Create TestCase
+        description: Parameters to create test case.
         required: true
         content:
           application/json:
@@ -10786,7 +10801,7 @@ paths:
               "$ref": "#/components/schemas/TestCaseApiRequest"
       responses:
         '201':
-          description: created
+          description: Test case was created.
           content:
             application/json:
               schema:
@@ -10826,17 +10841,22 @@ paths:
   "/test_cases/{id}.{format}":
     get:
       summary: Get TestCase
+      operationId: GetTestCase
+      description: Use this method to get details about test case. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and  ID of the test case (<i>id</i>) in the <b>Path</b>.<br/>
+        As a response, you can see the details of your current test case. <br/>
+        See the schema below.
       tags:
-      - Test case
+        - Test case
       parameters:
       - name: id
         in: path
-        description: ID of TestCase
+        description: ID of the test case.
         required: true
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10846,7 +10866,7 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of TestCase
+          description: Details of the test case.
           content:
             application/json:
               schema:
@@ -10876,11 +10896,16 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update TestCase
+      operationId: UpdateTestCase
+      description: Use this method to update details about the test case. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>), ID of the test case (<i>id</i>) in the <b>Path</b> and parameters you want to update to the <b>Body</b>. <br/>
+        As a response, you can see your updated test case details. <br/>
+        See the schema below.
       tags:
       - Test case
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10890,12 +10915,12 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of TestCase
+        description: ID of the test case.
         required: true
         schema:
           type: integer
       requestBody:
-        description: Update given TestCase
+        description: Parameters to update test case.
         required: true
         content:
           application/json:
@@ -10909,7 +10934,7 @@ paths:
               "$ref": "#/components/schemas/TestCaseApiRequest"
       responses:
         '200':
-          description: updated
+          description: Test case was updated.
           content:
             application/json:
               schema:
@@ -10947,12 +10972,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy TestCase
+      summary: Delete TestCase
+      operationId: DeleteTestCase
+      description: Use this method to delete test case. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>), ID of the test plan in the <b>Path</b>. <br/>
       tags:
       - Test case
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10962,13 +10990,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of TestCase
+        description: ID of the test case.
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Test case was deleted.
         '401':
           description: not authorized
         '403':
@@ -19322,14 +19350,23 @@ components:
       properties:
         project_id:
           type: integer
+          description: ID of the project.
+          example: 1
         author_id:
           type: integer
+          description: ID of the author.
+          example: 21
         name:
           type: string
+          description: Name of the test case.
+          example: My test case.
         scenario:
           type: string
+          description: Test case scenario.
+          example: This is my scenario for test case.
         expected_result:
           type: string
+          description: What you expect as a result of your test case.
         issue_ids:
           type: array
           items:
@@ -19358,6 +19395,7 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the test case.
           readOnly: true
           example: 1
         project:
@@ -19366,10 +19404,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the project.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the project.
+              example: My project name.
               xml:
                 attribute: true
         author:
@@ -19378,18 +19420,27 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the author.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the author.
+              example: Author name.
               xml:
                 attribute: true
         name:
           type: string
+          description: Name of the test case.
+          example: My test case name.
         scenario:
           type: string
+          description: Test case scenario.
+          example: This is my scenario for test case.
         expected_result:
           type: string
+          description: What you expect as a result of your test case.
         issue_ids:
           type: array
           items:
