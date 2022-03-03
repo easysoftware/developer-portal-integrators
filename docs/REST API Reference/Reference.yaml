@@ -1221,6 +1221,8 @@ paths:
   "/easy_attendances/{id}.{format}":
     get:
       summary: Get EasyAttendance
+      description: Get a single record of EasyAttandance.
+      operationId: getAttandance
       tags:
       - Easy attendance
       parameters:
@@ -1231,7 +1233,7 @@ paths:
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1241,7 +1243,7 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of EasyAttendance
+          description: Successfully retrieved EasyAttendance record
           content:
             application/json:
               schema:
