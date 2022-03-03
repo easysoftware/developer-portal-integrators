@@ -1221,8 +1221,8 @@ paths:
   "/easy_attendances/{id}.{format}":
     get:
       summary: Get EasyAttendance
-      description: Get a single record of EasyAttandance.
       operationId: getAttandance
+      description: Get a single record of EasyAttandance.
       tags:
       - Easy attendance
       parameters:
