@@ -10989,12 +10989,16 @@ paths:
   "/test_plans.{format}":
     get:
       summary: List of TestPlans
-      description: For filtering send parameter `set_filter=1` and specify filters
+      operationId: ListOfTestPlans
+      description: Use this method to get list of test plans. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) in the <b>Path</b> and specific parameters into the <b>Query</b>. <br/>
+        As a response, you can see list of test plans. The number of test plans depends on <i>limit</i> parameters. <br/>
+        See the schema below.
       tags:
       - Test plan
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11003,29 +11007,29 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of current entity.
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        description: Enable filter through Easy Query.
         in: query
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: The number of items to be present in the response Default is
+          25, maximum is 100.
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: The offset of the first object to retrieve.
         in: query
         schema:
           type: integer
       responses:
         '200':
-          description: ok
+          description: OK
           content:
             application/json:
               schema:
@@ -11036,16 +11040,19 @@ paths:
                 properties:
                   total_count:
                     type: number
+                    description: Total count of the test plans.
                     example: 75
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: Test plans offset.
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: Current limit of test plans.
                     example: 25
                     xml:
                       attribute: true
@@ -11083,11 +11090,16 @@ paths:
           description: not authorized
     post:
       summary: Create TestPlan
+      operationId: CreateTestPlan
+      description: Use this method to create new test plan. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) in the <b>Path</b> and fill all possible parameters to the <b>Body</b>. <br/>
+        As a response, you can see your created test plan. <br/>
+        See the schema below.
       tags:
       - Test plan
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11096,7 +11108,7 @@ paths:
           - json
           - xml
       requestBody:
-        description: Create TestPlan
+        description: Test plan parameters
         required: true
         content:
           application/json:
@@ -11110,7 +11122,7 @@ paths:
               "$ref": "#/components/schemas/TestPlanApiRequest"
       responses:
         '201':
-          description: created
+          description: Test plan was created.
           content:
             application/json:
               schema:
@@ -11150,17 +11162,22 @@ paths:
   "/test_plans/{id}.{format}":
     get:
       summary: Get TestPlan
+      operationId: GetTestPlan
+      description: Use this method to get details about test plan. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and  ID of the test plan in the <b>Path</b>.<br/>
+        As a response, you can see the details of your current test plan. <br/>
+        See the schema below.
       tags:
       - Test plan
       parameters:
       - name: id
         in: path
-        description: ID of TestPlan
+        description: ID of the test plan.
         required: true
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11170,7 +11187,7 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of TestPlan
+          description: Details of the TestPlan.
           content:
             application/json:
               schema:
@@ -11200,11 +11217,16 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update TestPlan
+      operationId: UpdatedTestPlan
+      description: Use this method to update details about the test plan. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>), ID of the test plan (<i>id</i>) in the <b>Path</b> and parameters you want to update to the <b>Body</b>. <br/>
+        As a response, you can see your updated test plan details. <br/>
+        See the schema below.
       tags:
       - Test plan
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11214,7 +11236,7 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of TestPlan
+        description: ID of the test plan.
         required: true
         schema:
           type: integer
@@ -11271,12 +11293,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy TestPlan
+      summary: Delete TestPlan 
+      operationId: DeleteTestPlan
+      description: Use this method to delete test plan. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>), ID of the test plan in the <b>Path</b>. <br/>
       tags:
       - Test plan
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11286,13 +11311,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of TestPlan
+        description: ID of the test plan.
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Test plan was deleted.
         '401':
           description: not authorized
         '403':
@@ -12743,18 +12768,22 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the custom field value.
           readOnly: true
           example: 1
         name:
           example: Hero list
+          description: Name of the custom field value.
           readOnly: true
           type: string
         internal_name:
           example: easy_hero_list
+          description: Internal name of the custom field.
           readOnly: true
           type: string
         field_format:
           readOnly: true
+          description: Specific format of the field. Choose one of the allowed values.
           enum:
           - string
           - text
@@ -12784,7 +12813,7 @@ components:
           - flag
           type: string
         value:
-          description: value is based on field_format - can be Array, Boolean, Date
+          description: Value is based on field_format. It can be Array, Boolean or Date.
           type: string
       xml:
         name: custom_field_value
@@ -19496,10 +19525,13 @@ components:
       properties:
         project_id:
           type: integer
+          description: ID of the project.
         author_id:
           type: integer
+          description: ID of the author.
         name:
           type: string
+          description: Name of the test plan.
         issue_ids:
           type: array
           items:
@@ -19521,6 +19553,7 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the test plan.
           readOnly: true
           example: 1
         project:
@@ -19529,10 +19562,12 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the project.
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the project.
               xml:
                 attribute: true
         author:
@@ -19541,14 +19576,17 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the author.
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the author.
               xml:
                 attribute: true
         name:
           type: string
+          description: Name of the test plan.
         issue_ids:
           type: array
           items:
