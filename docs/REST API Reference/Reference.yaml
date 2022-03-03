@@ -10228,12 +10228,15 @@ paths:
   "/test_case_issue_execution_results.{format}":
     get:
       summary: List of TestCaseIssueExecutionResults
-      description: For filtering send parameter `set_filter=1` and specify filters
+      description: Use this method to get details about test case issue execution results. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) in the <b>Path</b> and list parameters in the <b>Query</b>.<br/>
+        As a response, you can see the list of test case issue executions results. <br/>
+        See the schema below.
       tags:
       - Test case issue execution result
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10242,29 +10245,29 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of thecurrent entity.
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        description: Enable filter through the Easy Query.
         in: query
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: The number of items to be present in the response. Default is
+          25, maximum is 100.
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: The offset of the first object to retrieve.
         in: query
         schema:
           type: integer
       responses:
         '200':
-          description: ok
+          description: OK
           content:
             application/json:
               schema:
@@ -10323,12 +10326,15 @@ paths:
   "/test_case_issue_executions.{format}":
     get:
       summary: List of TestCaseIssueExecutions
-      description: For filtering send parameter `set_filter=1` and specify filters
+      description: Use this method to get list of  test case issue executions. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the test case (<i>id</i>) in the <b>Path</b> and parameters to the <b>Query</b>.<br/>
+        As a response, you can see list of current test case issue executions. <br/>
+        See the schema below.
       tags:
       - Test case issue execution
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10337,29 +10343,29 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of the current entity.
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        description: Enable filter through the Easy Query.
         in: query
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: The number of items to be present in the response. Default is
+          25, maximum is 100.
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: The offset of the first object to retrieve.
         in: query
         schema:
           type: integer
       responses:
         '200':
-          description: ok
+          description: OK
           content:
             application/json:
               schema:
@@ -10370,16 +10376,19 @@ paths:
                 properties:
                   total_count:
                     type: number
+                    description: Total count of test case issue executions.
                     example: 75
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: Test case issue executions offset.
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: Test case issue executions list limit.
                     example: 25
                     xml:
                       attribute: true
@@ -10416,12 +10425,17 @@ paths:
         '401':
           description: not authorized
     post:
-      summary: Create TestCaseIssueExecutio
+      summary: Create TestCaseIssueExecution
+      operationId: CreateTestCaseIssueExecution
+      description: Use this method to create new test case issue execution. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) to the <b>Path</b>, test case ID (<i>id</i>) to the <b>Query</b> and test case issue execution parameters to the <b>Body</b>.<br/>
+        As a response, you can see your creted test case issue executions. <br/>
+        See the schema below.
       tags:
       - Test case issue execution
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10431,7 +10445,7 @@ paths:
           - xml
       - name: test_case_id
         required: true
-        description: Test case ID
+        description: Test case ID.
         in: query
         schema:
           type: string
@@ -10457,7 +10471,7 @@ paths:
                   "$ref": "#/components/schemas/TestCaseIssueExecutionApiRequest"
       responses:
         '200':
-          description: ok
+          description: Test case issue executions was created.
           content:
             application/json:
               schema:
@@ -10502,17 +10516,22 @@ paths:
   "/test_case_issue_executions/{id}.{format}":
     get:
       summary: Get TestCaseIssueExecution
+      operationId: GetTestCaseIssueExectution
+      description: Use this method to get details about test case issue execution. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and  ID of the test case (<i>id</i>) in the <b>Path</b>.<br/>
+        As a response, you can see the details of your current test case issue execution. <br/>
+        See the schema below.
       tags:
       - Test case issue execution
       parameters:
       - name: id
         in: path
-        description: ID of TestCaseIssueExecution
+        description: ID of the test case issue execution.
         required: true
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10522,7 +10541,7 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of TestCaseIssueExecution
+          description: Details of the test case issue execution.
           content:
             application/json:
               schema:
@@ -10552,11 +10571,16 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update TestCaseIssueExecution
+      operationId: UpdateTestCaseIssueExecution
+      description: Use this method to update details about test case issue execution. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and  ID of the test case (<i>id</i>) in the <b>Path</b> and parameters you want to change it to the <b>Body</b>. <br/>
+        As a response, you can see the changed details of your current test case issue execution. <br/>
+        See the schema below.
       tags:
       - Test case issue execution
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10566,7 +10590,7 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of TestCaseIssueExecution
+        description: ID of the test case issue execution.
         required: true
         schema:
           type: integer
@@ -10585,7 +10609,7 @@ paths:
               "$ref": "#/components/schemas/TestCaseIssueExecutionApiRequest"
       responses:
         '200':
-          description: updated
+          description: Test case issue execution was updated.
           content:
             application/json:
               schema:
@@ -10623,12 +10647,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy TestCaseIssueExecution
+      summary: Delete TestCaseIssueExecution
+      operationId: DeleteTestCaseIssueExecution
+      description: Use this method to delete test case issue execution. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and  ID of the test case (<i>id</i>) in the <b>Path</b>. <br/>
       tags:
       - Test case issue execution
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10638,13 +10665,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of TestCaseIssueExecution
+        description: ID of the test case issue execution.
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Test case issue execution was deleted.
         '401':
           description: not authorized
         '403':
@@ -19364,14 +19391,24 @@ components:
       properties:
         author_id:
           type: integer
+          description: ID of the author.
+          example: 10
         issue_id:
           type: integer
+          description: ID of the issue.
+          example: 10
         test_case_id:
           type: integer
+          description: ID of the test case.
+          example: 10
         test_case_issue_execution_result_id:
           type: integer
+          description: ID of the test case issue execution result.
+          example: 10
         comments:
           type: string
+          description: You comments to test case issue execution result.
+          example: My test case issue execution comment.
         attachments:
           type: array
           description: if you specify `include=attachments`
@@ -19387,6 +19424,7 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the test case issue execution.    
           readOnly: true
           example: 1
         author:
@@ -19395,10 +19433,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the author.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the author.
+              example: My author name.
               xml:
                 attribute: true
         issue:
@@ -19407,10 +19449,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the issue.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the issue.
+              example: My issue name.
               xml:
                 attribute: true
         test_case:
@@ -19419,10 +19465,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the test case.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the test case.
+              example: My test case name.
               xml:
                 attribute: true
         test_case_issue_execution_result:
@@ -19431,17 +19481,21 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the test case issue execution.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the test case issue execution.
+              example: My test case issue execution name.
               xml:
                 attribute: true
         comments:
           type: string
         attachments:
           type: array
-          description: if you specify `include=attachments`
+          description: In case of you specify `include=attachments`.
           xml:
             wrapped: true
           items:
