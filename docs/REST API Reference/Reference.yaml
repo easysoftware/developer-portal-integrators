@@ -1526,8 +1526,7 @@ paths:
     post:
       summary: Create EasyChecklist
       description: Use this endpoint to create a checklist.<br/>
-       You can also create all checklist items within the checklist straight away. Alternatively you can use endpoint
-       [POST /easy_checklist_item.{format}](Reference.yaml/paths/~1easy_checklist_items.{format})
+       You can also create all checklist items within the checklist straight away. Alternatively you can use endpoint `POST /easy_checklist_item.{format}`
       operationId: createChecklist
       tags:
       - Easy checklist
@@ -1596,6 +1595,8 @@ paths:
   "/easy_checklists/{id}.{format}":
     get:
       summary: Get EasyChecklist
+      operationId: getChecklist
+      description: Get a specific checklist by ID. 
       tags:
       - Easy checklist
       parameters:
@@ -1606,7 +1607,7 @@ paths:
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1616,7 +1617,7 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of EasyChecklist
+          description: Successfully retrived a EasyChecklist
           content:
             application/json:
               schema:
@@ -1646,11 +1647,13 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update EasyChecklist
+      description: Use this endpoint to update a specific checklist using checklist ID.
+      operationId: 
       tags:
       - Easy checklist
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1665,7 +1668,7 @@ paths:
         schema:
           type: integer
       requestBody:
-        description: Update given EasyChecklist
+        description: Request body to update a EasyChecklist
         required: true
         content:
           application/json:
@@ -1679,7 +1682,7 @@ paths:
               "$ref": "#/components/schemas/EasyChecklistApiRequest"
       responses:
         '200':
-          description: updated
+          description: Successfully updated checklist
           content:
             application/json:
               schema:
@@ -1717,12 +1720,14 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy EasyChecklist
+      summary: Delete EasyChecklist
+      operationId: deleteChecklist
+      description: Use this endpoint to delete a checklist using ID.
       tags:
       - Easy checklist
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1738,7 +1743,7 @@ paths:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Successfully deleted checklist
         '401':
           description: not authorized
         '403':
@@ -13403,8 +13408,10 @@ components:
         name:
           example: To do list
           type: string
+          description: Name of the checklist shown to the user
         is_default_for_new_projects:
           type: boolean
+          description: Whether the checklist will be available for all newly created projects
           example: false
         entity_id:
           type: integer
@@ -13414,6 +13421,7 @@ components:
           type: string
         easy_checklist_items_attributes:
           type: array
+          description: List of checklist items represented as objects that populate the checklist.
           xml:
             wrapped: true
           items:
@@ -13424,16 +13432,20 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the checklist
           readOnly: true
           example: 1
         name:
           example: To do list
+          description: Name of the checklist
           type: string
         is_default_for_new_projects:
           type: boolean
           example: false
+          description: Whether the checklist will be available for newly created projects
         author:
           type: object
+          description: Object containing information about the author
           readOnly: true
           properties:
             id:
