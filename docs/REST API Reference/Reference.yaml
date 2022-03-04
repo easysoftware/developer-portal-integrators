@@ -1525,11 +1525,14 @@ paths:
   "/easy_checklists.{format}":
     post:
       summary: Create EasyChecklist
+      description: Use this endpoint to create a checklist.<br/>
+       You can also create all checklist items within the checklist straight away. Alternatively you can use endpoint [POST /easy_checklist_item.{format}](#easy_checklist_items.{format})
+      operationId: createChecklist
       tags:
       - Easy checklist
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1538,7 +1541,7 @@ paths:
           - json
           - xml
       requestBody:
-        description: Create EasyChecklist
+        description: Request body to create EasyChecklist
         required: true
         content:
           application/json:
@@ -1552,7 +1555,7 @@ paths:
               "$ref": "#/components/schemas/EasyChecklistApiRequest"
       responses:
         '201':
-          description: created
+          description: Checklist successfully created
           content:
             application/json:
               schema:
