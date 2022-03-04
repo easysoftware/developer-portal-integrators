@@ -1435,7 +1435,7 @@ paths:
         schema:
           type: integer
       requestBody:
-        description: Update given EasyChecklistItem
+        description: Request update body of EasyChecklistItem
         required: true
         content:
           application/json:
@@ -1449,7 +1449,7 @@ paths:
               "$ref": "#/components/schemas/EasyChecklistItemApiRequest"
       responses:
         '200':
-          description: updated
+          description: Successfully updated checklist item
           content:
             application/json:
               schema:
@@ -1487,12 +1487,14 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy EasyChecklistItem
+      summary: Delete EasyChecklistItem
+      operationId: deleteChecklistItem
+      description: Use this endpoint to delete a specific checklist item.
       tags:
       - Easy checklist item
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response
         in: path
         required: true
         schema:
@@ -1508,7 +1510,7 @@ paths:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Successfully deleted checklist item
         '401':
           description: not authorized
         '403':
@@ -13403,6 +13405,7 @@ components:
         name:
           example: To do list
           type: string
+          desciption: aa
         is_default_for_new_projects:
           type: boolean
           example: false
@@ -13478,17 +13481,21 @@ components:
     EasyChecklistItemApiRequest:
       properties:
         subject:
-          example: Need to do
+          example: Buy groceries
           type: string
+          description: Description of the item to be done
         done:
           type: boolean
-          description: Is this done item?
+          description: Whether the checklist item has been marked as done
           example: false
         easy_checklist_id:
           type: integer
+          description: ID of the checklist this item relates to
+          example: 22
         new_position:
           type: integer
           example: 1
+          description: Position of the item within the list. If not filled in, the item is put at the end of the list.
       xml:
         name: easy_checklist_item
     EasyChecklistItemApiRequestFromChecklists:
@@ -13514,21 +13521,26 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the checklist item
           readOnly: true
           example: 1
         subject:
-          example: Need to do
+          example: Buy groceries
+          description: Description of the item to be done
           type: string
         done:
           type: boolean
-          description: Is this done item?
+          description: Whether the checklist item has been marked as done
           example: false
         author:
           type: object
+          description: Object describing author information
           readOnly: true
           properties:
             id:
               type: integer
+              description: ID of the user who created the checklist item
+              example: 17
               xml:
                 attribute: true
             name:
