@@ -1526,7 +1526,7 @@ paths:
     post:
       summary: Create EasyChecklist
       description: Use this endpoint to create a checklist.<br/>
-       You can also create all checklist items within the checklist straight away. Alternatively you can use endpoint [POST /easy_checklist_item.{format}](https://easysoftware.stoplight.io/docs/developer-portal-integrators/docs/REST%20API%20Reference/Reference.yaml#easy_checklist_items.{format})
+       You can also create all checklist items within the checklist straight away. Alternatively you can use endpoint [POST /easy_checklist_item.{format}](docs/REST API Reference/Reference.yaml/paths/~1easy_checklist_items.{format})
       operationId: createChecklist
       tags:
       - Easy checklist
