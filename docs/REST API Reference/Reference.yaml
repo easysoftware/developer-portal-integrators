@@ -13405,7 +13405,6 @@ components:
         name:
           example: To do list
           type: string
-          desciption: aa
         is_default_for_new_projects:
           type: boolean
           example: false
@@ -13509,9 +13508,9 @@ components:
           example: false
         id:
           type: integer
-          description: Optional. Specify only to update an item in checklist.
-          example: 1 (Optional. Specify only to update an item with 'id' in checklist.
-            Skip this attribute for create new element in checklist.)
+          description: Optional. Specify only to update an item with 'id' in checklist.
+            Skip this attribute for create new element in checklist.
+          example: 1
         new_position:
           type: integer
           example: 1
@@ -13534,7 +13533,7 @@ components:
           example: false
         author:
           type: object
-          description: Object describing author information
+          description: Object describing information about author
           readOnly: true
           properties:
             id:
@@ -13545,41 +13544,58 @@ components:
                 attribute: true
             name:
               type: string
+              description: Name of the user who created the checklist item
+              example: John Doe
               xml:
                 attribute: true
         changed_by:
           type: object
+          description: Object describing information about user who last updated the checklist item.
           readOnly: true
           properties:
             id:
               type: integer
+              description: ID of the user in Easy Software who last updated the checklist item
+              example: 15
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the user who last updated the checklist item
+              example: John Doe
               xml:
                 attribute: true
         easy_checklist:
           type: object
+          description: Object describing information about checklist which checklist item is a part of 
           readOnly: true
           properties:
             id:
               type: integer
+              description: ID of the checklist the item is a part of
+              example: 5
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the checklist the item is a part of
+              example: Agenda for this week
               xml:
                 attribute: true
         position:
           type: integer
           example: 1
+          description: Position of the checklist item within the checklist. If not filled in, the item is placed as the last in the list
         created_at:
           type: string
           format: date-time
+          description: Datetime when the checklist item was created
+          example: 2001-12-15T02:59:43.1Z
           readOnly: true
         updated_at:
           type: string
+          description: Datetime when the checklist item was last updated
+          example: 2001-12-15T02:59:43.1Z
           format: date-time
           readOnly: true
       xml:
@@ -20161,4 +20177,6 @@ components:
     key:
       type: apiKey
       name: key
+      in: query
+ey
       in: query
