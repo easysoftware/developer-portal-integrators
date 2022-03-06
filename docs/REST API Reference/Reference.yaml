@@ -1773,6 +1773,7 @@ paths:
       - name: easy_query_q
         description: Free-text filter for contacts
         in: query
+        example: John Doe
         schema:
           type: string
       - name: set_filter
@@ -1781,14 +1782,15 @@ paths:
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: Limits the number of returned results. Minimum is 25, maximum is 100.
         in: query
+        example: 100
         schema:
           type: integer
       - name: offset
         description: the offset of the first object to retrieve
         in: query
+        example: 100
         schema:
           type: integer
       - name: include
