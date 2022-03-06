@@ -1755,12 +1755,14 @@ paths:
   "/easy_contacts.{format}":
     get:
       summary: List of EasyContacts
-      description: For filtering send parameter `set_filter=1` and specify filters
+      operationId: getContacts
+      description: Use this endpoint to get list of contacts.<br/> 
+        For filtering send parameter `set_filter=1` and specify filters
       tags:
       - Easy contact
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1769,7 +1771,7 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter for contacts
         in: query
         schema:
           type: string
