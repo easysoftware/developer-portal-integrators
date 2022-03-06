@@ -1648,7 +1648,7 @@ paths:
     put:
       summary: Update EasyChecklist
       description: Use this endpoint to update a specific checklist using checklist ID.
-      operationId: 
+      operationId: updateChecklist
       tags:
       - Easy checklist
       parameters:
@@ -1722,7 +1722,7 @@ paths:
     delete:
       summary: Delete EasyChecklist
       operationId: deleteChecklist
-      description: Use this endpoint to delete a checklist using ID.
+      description: Use this endpoint to delete a checklist using checklist ID.
       tags:
       - Easy checklist
       parameters:
@@ -13450,10 +13450,14 @@ components:
           properties:
             id:
               type: integer
+              example: 15
+              description: ID of the checklist author within Easy Software
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the checklist author within Easy Software
+              example: John Doe
               xml:
                 attribute: true
         entity:
@@ -13473,16 +13477,21 @@ components:
               example: Issue
         easy_checklist_items:
           type: array
+          description: List of objects of related checklist items
           xml:
             wrapped: true
           items:
             "$ref": "#/components/schemas/EasyChecklistItemApiResponse"
         created_at:
           type: string
+          description: Datetime when the checklist was created
+          example: 2001-12-15T02:59:43.1Z
           format: date-time
           readOnly: true
         updated_at:
           type: string
+          description: Datetime when the checklist was last updated
+          example: 2001-12-15T02:59:43.1Z
           format: date-time
           readOnly: true
       xml:
