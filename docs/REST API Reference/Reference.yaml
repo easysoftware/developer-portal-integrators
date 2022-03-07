@@ -9051,17 +9051,22 @@ paths:
   "/projects/{id}.{format}":
     get:
       summary: Get Project
+      operationId: GetProject
+      description: Use this method to get project. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the project (id) in the <b>Path</b>. <br/> 
+        Also, specify the associations you want to be included (<i>include</i>) in the <b>Query</b> (use one of the allowed values.<br/>
+        See the schema below.
       tags:
       - Project
       parameters:
       - name: id
         in: path
-        description: ID of Project
+        description: ID of the project.
         required: true
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9071,8 +9076,7 @@ paths:
           - xml
       - name: include
         description: |-
-          explicitly specify the associations you want to be included in the query result (separated by a comma)
-
+          Explicitly specify the associations you want to be included in the query result (separated by a comma)
           * **trackers** (List of enabled trackers on project)
           * **issue_categories** (List of IssueCategories)
           * **enabled_modules** (List of enabled project modules)
@@ -9087,7 +9091,7 @@ paths:
             - enabled_modules
       responses:
         '200':
-          description: detail of Project
+          description: Details of the project.
           content:
             application/json:
               schema:
@@ -9230,11 +9234,15 @@ paths:
   "/projects/{id}/close.{format}":
     post:
       summary: Close Project
+      operationId: CloseProject
+      description: Use this method to close project. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the project (id) in the <b>Path</b>.<br/>
+        See the schema below.
       tags:
       - Project
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9244,13 +9252,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of Project
+        description: ID of the project.
         required: true
         schema:
           type: string
       responses:
         '204':
-          description: ok
+          description: The project was closed.
         '401':
           description: not authorized
         '403':
@@ -9280,11 +9288,15 @@ paths:
   "/projects/{id}/reopen.{format}":
     post:
       summary: Reopen Project
+      operationId: ReopenProject
+      description: Use this method to reopen project. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the project (id) in the <b>Path</b>.<br/>
+        See the schema below.
       tags:
       - Project
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9294,13 +9306,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of Project
+        description: ID of the project.
         required: true
         schema:
           type: string
       responses:
         '204':
-          description: ok
+          description: The project was reopened.
         '401':
           description: not authorized
         '403':
@@ -9330,11 +9342,15 @@ paths:
   "/projects/{id}/archive.{format}":
     post:
       summary: Archive Project
+      operationId: ArchiveProject
+      description: Use this method to archive project. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the project (id) in the <b>Path</b>.<br/>
+        See the schema below.
       tags:
       - Project
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9344,13 +9360,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of Project
+        description: ID of the project.
         required: true
         schema:
           type: string
       responses:
         '204':
-          description: ok
+          description: The project was archived.
         '401':
           description: not authorized
         '403':
@@ -9380,11 +9396,15 @@ paths:
   "/projects/{id}/unarchive.{format}":
     post:
       summary: Unarchive Project
+      operationId: UnarchiveProject
+      description: Use this method to unarchive project. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the project (id) in the <b>Path</b>.<br/>
+        See the schema below.
       tags:
       - Project
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9394,13 +9414,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of Project
+        description: ID of the project.
         required: true
         schema:
           type: string
       responses:
         '204':
-          description: ok
+          description: The project was unarchived.
         '401':
           description: not authorized
         '403':
@@ -9430,11 +9450,15 @@ paths:
   "/projects/{id}/favorite.{format}":
     post:
       summary: Add Project to favorites
+      operationId: AddProjectToFavorites
+      description: Use this method to add project to favorites. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the project (id) in the <b>Path</b>.<br/>
+        See the schema below.
       tags:
       - Project
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9444,13 +9468,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of Project
+        description: ID of the project
         required: true
         schema:
           type: string
       responses:
         '204':
-          description: ok
+          description: The project was added to favorites.
         '401':
           description: not authorized
         '403':
@@ -9480,11 +9504,15 @@ paths:
   "/projects/{id}/unfavorite.{format}":
     post:
       summary: Remove Project from favorites
+      operationId: RemoveProjectFromFavirotes
+      description: Use this method to remove project from favorites. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the project (<i>id</i>) in the <b>Path</b>.<br/>
+        See the schema below.
       tags:
       - Project
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9494,13 +9522,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of Project
+        description: ID of the project.
         required: true
         schema:
           type: string
       responses:
         '204':
-          description: ok
+          description: The project was removed from favorites.
         '401':
           description: not authorized
         '403':
@@ -12708,10 +12736,11 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the custom field.
           example: 1
         value:
           example: Iron Man
-          description: value is based on field_format - can be Array, Boolean, Date
+          description: Value is based on field_format - can be Array, Boolean or Date.
           type: string
       xml:
         name: custom_field_value
@@ -12719,14 +12748,17 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the custom field.
           readOnly: true
           example: 1
         name:
           example: Hero list
+          description: Name of the custom field.
           readOnly: true
           type: string
         internal_name:
           example: easy_hero_list
+          description: Internal name of the custom field.
           readOnly: true
           type: string
         field_format:
@@ -12760,7 +12792,7 @@ components:
           - flag
           type: string
         value:
-          description: value is based on field_format - can be Array, Boolean, Date
+          description: Value is based on field_format - can be Array, Boolean or Date.
           type: string
       xml:
         name: custom_field_value
@@ -18835,20 +18867,28 @@ components:
       properties:
         easy_external_id:
           example: external-system-1
+          description: Easy external ID of the project.
           type: string
         name:
           example: Blue 2
+          description: Name of the project.
           type: string
         homepage:
           example: blue-2
+          description: Homepage of the project.
           type: string
         description:
-          example: I can’t abide these Jawas. Disgusting creatures.
+          example: My project description.
           type: string
+          description: Description of the project.
         parent_id:
           type: integer
+          description: Parent ID of the project.
+          example: 12
         author_id:
           type: integer
+          description: Author ID of the project.
+          example: 31
         is_planned:
           type: boolean
         easy_is_easy_template:
@@ -18857,16 +18897,20 @@ components:
         easy_start_date:
           format: date
           type: string
+          description: Start date of the project.
+          example: 2021-09-21
         easy_due_date:
           format: date
           type: string
+          description: Due date of the project.
+          example: 2021-01-02
         custom_fields:
           type: array
           items:
             "$ref": "#/components/schemas/CustomFieldValueApiRequest"
         tag_list:
           type: array
-          description: List of tags associated with entity
+          description: List of tags associated with entity.
           example:
           - deployment
           - gantt
@@ -18884,7 +18928,12 @@ components:
           properties:
             id:
               type: integer
-            name: {}
+              description: Easy priority ID.
+              example: 21
+            name: 
+              type: string
+              description: Name of the Easy priority ID.
+              example: My Easy priority ID name.
       required:
       - name
       - author_id
@@ -18894,19 +18943,24 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the project.
           readOnly: true
           example: 1
         easy_external_id:
           example: external-system-1
+          description: ID of the easy external.
           type: string
         name:
           example: Blue 2
+          description: Name of the project.
           type: string
         homepage:
           example: blue-2
+          description: Homepage name.
           type: string
         description:
-          example: I can’t abide these Jawas. Disgusting creatures.
+          example: My description.
+          description: Description of the project.
           type: string
         parent:
           type: object
@@ -18914,10 +18968,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the parent.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the parent.
+              example: My parent name.
               xml:
                 attribute: true
         author:
@@ -18926,10 +18984,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the author.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the author.
+              example: My author name.
               xml:
                 attribute: true
         is_planned:
@@ -18939,10 +19001,14 @@ components:
           description: Is this project a template?
         easy_start_date:
           format: date
+          description: Start date of the project.
           type: string
+          example: 2019-09-15
         easy_due_date:
           format: date
           type: string
+          description: Due date of the project.
+          example: 2020-02-21
         custom_fields:
           type: array
           xml:
@@ -18951,7 +19017,7 @@ components:
             "$ref": "#/components/schemas/CustomFieldValueApiResponse"
         tag_list:
           type: array
-          description: List of tags associated with entity
+          description: List of tags associated with entity.
           example:
           - deployment
           - gantt
@@ -18961,11 +19027,11 @@ components:
         status:
           readOnly: true
           enum:
-          - 1
-          - 5
-          - 9
-          - 15
-          - 19
+          - "1"
+          - "5"
+          - "9"
+          - "15"
+          - "19"
           example: '1'
           description: |-
             1 = ACTIVE
@@ -18981,13 +19047,16 @@ components:
         identifier:
           readOnly: true
           example: blue2
+          description: Specific indentifier of the project.
           type: string
         sum_time_entries:
           type: integer
+          description: Total time of enteries.
           readOnly: true
         sum_estimated_hours:
           type: integer
           readOnly: true
+          description: Total estimated time.
         currency:
           readOnly: true
           type: string
@@ -18995,19 +19064,25 @@ components:
           type: string
           format: date-time
           readOnly: true
+          description: Date and time when project was created.
         updated_on:
           type: string
           format: date-time
           readOnly: true
+          description: Date and time when project was updated.
         start_date:
           format: date
           type: string
+          description: Start date of the project.
+          example: 2021-02-03
         due_date:
           format: date
           type: string
+          description: Due date of the project.
+          example: 2022-01-01
         trackers:
           type: array
-          description: if you specify `include=trackers`
+          description: If you specify `include=trackers`.
           items:
             title: Tracker
             type: object
@@ -19015,19 +19090,23 @@ components:
             properties:
               id:
                 type: integer
-                example: '1'
+                description: ID of the tracker.
+                example: 1
               name:
                 example: bug
+                description: Name of the tracker.
                 type: string
               internal_name:
                 example: easy_bug
+                description: Internal name of the tracker.
                 type: string
               easy_external_id:
                 example: easy_bug
+                description: Easy external ID of the tracker.
                 type: string
         issue_categories:
           type: array
-          description: if you specify `include=issue_categories`
+          description: If you specify `include=issue_categories`.
           items:
             title: IssueCategory
             type: object
@@ -19035,11 +19114,15 @@ components:
             properties:
               id:
                 type: integer
+                description: ID of the issue category.
+                example: 21
               name:
                 type: string
+                description: Name of the issue category.
+                example: My issue category name.
         time_entry_activities:
           type: array
-          description: if you specify `include=time_entry_activities`
+          description: If you specify `include=time_entry_activities`.
           items:
             title: TimeEntryActivity
             type: object
@@ -19047,11 +19130,15 @@ components:
             properties:
               id:
                 type: integer
+                description: ID of the time entry activity.
+                example: 12
               name:
                 type: string
+                description: Name of the time entry activity.
+                example: My time entry activity.
         enabled_modules:
           type: array
-          description: if you specify `include=enabled_modules`
+          description: If you specify `include=enabled_modules`.
           items:
             title: EnabledModule
             type: object
@@ -19059,17 +19146,20 @@ components:
             properties:
               id:
                 type: integer
+                description: ID of the enabled module.
+                example: 39
               name:
                 type: string
+                description: Name of the enabled module.
         scheduled_for_destroy:
           type: boolean
-          description: indicates if the project has been scheduled to be deleted
+          description: Indicates if the project has been scheduled to be deleted.
           readOnly: true
         destroy_at:
           type: string
           format: date-time
-          description: the date when the project is expected to be deleted; is shown
-            only if the project has been scheduled to be deleted
+          description: The date when the project is expected to be deleted; is shown
+            only if the project has been scheduled to be deleted.
           readOnly: true
       xml:
         name: project
