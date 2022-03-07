@@ -8698,13 +8698,17 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/projects/{project_id}/memberships.{format}":
     get:
-      summary: Retrieve memberships of the Project with specified id
+      summary: Retrieve memberships of the project with specified ID
+      operationId: RetrieveMembershipsOfTheProjectWithSpecifiedID
+      description: Use this method to retrieve memberships of the project with specified ID. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the project (<i>id</i>) in the <b>Path</b>. <br/> 
+        See the schema below.
       tags:
       - Project membership
       - Membership
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -8714,7 +8718,7 @@ paths:
           - xml
       - name: project_id
         in: path
-        description: ID of Project
+        description: ID of the project.
         required: true
         schema:
           type: integer
@@ -8792,13 +8796,18 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     post:
-      summary: Create a membership in a Project with specified id
+      summary: Create a membership in a project with specified ID
+      operationId: CreateAMembershipInAProjectWithSpecifiedID
+      description: Use this method to create memberships in a project with specified ID. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the project (<i>id</i>) in the <b>Path</b>. <br/> 
+        Also, specify paramethers of your new membership in the <b>Body</b>.<br/>
+        See the schema below.
       tags:
       - Project membership
       - Membership
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -8808,12 +8817,12 @@ paths:
           - xml
       - name: project_id
         in: path
-        description: ID of Project
+        description: ID of the project.
         required: true
         schema:
           type: integer
       requestBody:
-        description: Create Project membership
+        description: Create project membership.
         required: true
         content:
           application/json:
@@ -8837,7 +8846,7 @@ paths:
               "$ref": "#/components/schemas/MembershipApiRequest"
       responses:
         '201':
-          description: created
+          description: Membership was created.
           content:
             application/json:
               schema:
@@ -8874,12 +8883,17 @@ paths:
   "/projects.{format}":
     get:
       summary: List of Projects
-      description: For filtering send parameter `set_filter=1` and specify filters
+      operationId: ListOfProjects
+      description: Use this method to list of projects. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) in the <b>Path</b>. <br/> 
+        Also, specify paramethers  in the <b>Query</b>.<br/>
+        See the schema below.<br/>
+        For filtering send parameter `set_filter=1` and specify filters
       tags:
       - Project
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -8888,30 +8902,29 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of current entity.
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        description: Enable filter through Easy Query.
         in: query
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: The number of items to be present in the response. Default is
+          25, maximum is 100.
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: The offset of the first object to retrieve.
         in: query
         schema:
           type: integer
       - name: include
         description: |-
-          explicitly specify the associations you want to be included in the query result (separated by a comma)
-
+          Explicitly specify the associations you want to be included in the query result (separated by a comma).
           * **trackers** (List of enabled trackers on project)
           * **issue_categories** (List of IssueCategories)
           * **enabled_modules** (List of enabled project modules)
@@ -8984,11 +8997,16 @@ paths:
           description: not authorized
     post:
       summary: Create Project
+      operationId: CreateProject
+      description: Use this method to create a new project. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) in the <b>Path</b>. <br/> 
+        Also, specify paramethers of your new project in the <b>Body</b>.<br/>
+        See the schema below.
       tags:
       - Project
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9011,7 +9029,7 @@ paths:
               "$ref": "#/components/schemas/ProjectApiRequest"
       responses:
         '201':
-          description: created
+          description: Project was created.
           content:
             application/json:
               schema:
@@ -9121,11 +9139,16 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update Project
+      operationId: UpdateProject
+      description: Use this method to update project. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the project (id) in the <b>Path</b>. <br/> 
+        Also, specify paramethers you want to update in the <b>Body</b>.<br/>
+        See the schema below.
       tags:
       - Project
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9135,7 +9158,7 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of Project
+        description: ID of the project.
         required: true
         schema:
           type: integer
@@ -9154,7 +9177,7 @@ paths:
               "$ref": "#/components/schemas/ProjectApiRequest"
       responses:
         '200':
-          description: updated
+          description: Project was updated.
           content:
             application/json:
               schema:
@@ -9192,12 +9215,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy Project
+      summary: Delete Project
+      operationId: DeleteProject
+      description: Use this method to delete project. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the project (id) in the <b>Path</b>. <br/> 
       tags:
       - Project
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9207,13 +9233,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of Project
+        description: ID of the project.
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Project was deleted.
         '401':
           description: not authorized
         '403':
@@ -18792,7 +18818,7 @@ components:
             type: integer
         role_ids:
           type: array
-          description: IDs of roles
+          description: IDs of roles.
           items:
             type: integer
       xml:
@@ -18801,6 +18827,7 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the membership.
           readOnly: true
           example: 1
         project:
@@ -18809,10 +18836,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the project.
+              example: 21
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the project.
+              example: My project name.
               xml:
                 attribute: true
         user:
@@ -18821,10 +18852,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the user.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the user.
+              example: My user name.
               xml:
                 attribute: true
         group:
@@ -18833,10 +18868,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the group.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the group.
+              example: Name of the group.
               xml:
                 attribute: true
         roles:
@@ -18849,17 +18888,25 @@ components:
             properties:
               id:
                 type: integer
+                description: ID of the role.
+                example: 93
               name:
                 type: string
+                description: Name of the role.
+                example: My role name.
               inherited:
                 type: boolean
+                description: Role is inherited.
+                example: true
         created_at:
           type: string
           format: date-time
+          description: Date and time when membership was created.
           readOnly: true
         updated_at:
           type: string
           format: date-time
+          description: Date and time when membership was updated.
           readOnly: true
       xml:
         name: membership
