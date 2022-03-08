@@ -589,7 +589,9 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/documents/{id}.{format}":
     get:
-      summary: Get Document
+      summary: Get Document by ID
+      description: Get specific document and its information.
+      operationId: getDocument
       tags:
       - Document
       parameters:
@@ -600,7 +602,7 @@ paths:
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -610,7 +612,7 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of Document
+          description: Retrieved detail of the Document
           content:
             application/json:
               schema:
@@ -640,11 +642,13 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update Document
+      description: Use this endpoint to update information of a document.
+      operationId: updateDocument
       tags:
       - Document
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of response
         in: path
         required: true
         schema:
@@ -659,7 +663,7 @@ paths:
         schema:
           type: integer
       requestBody:
-        description: Update given Document
+        description: Request body of the document to be updated
         required: true
         content:
           application/json:
@@ -673,7 +677,7 @@ paths:
               "$ref": "#/components/schemas/DocumentApiRequest"
       responses:
         '200':
-          description: updated
+          description: Document successfully updated
           content:
             application/json:
               schema:
@@ -711,12 +715,14 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy Document
+      summary: Delete Document
+      description: Use this endpoint to delete a specific document
+      operationId: deleteDocument
       tags:
       - Document
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of response
         in: path
         required: true
         schema:
@@ -732,7 +738,7 @@ paths:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Document deleted
         '401':
           description: not authorized
         '403':
@@ -752,13 +758,15 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/projects/{project_id}/documents.{format}":
     get:
-      summary: Retrieve documents of the Project with specified id
+      summary: Retrieve all documents of the Project with a specified ID
+      description: Retrieve all documents related to the project specified by ID
+      operationId: getDocumentsForProject
       tags:
       - Document
       - Project documents
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -768,7 +776,7 @@ paths:
           - xml
       - name: project_id
         in: path
-        description: ID of Project
+        description: Project ID for which the documents will be retrieved
         required: true
         schema:
           type: integer
@@ -811,12 +819,14 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     post:
       summary: Create a document in the Project with specified id
+      description: Create a document for a specific project.
+      operationId: createDocumentForProject
       tags:
       - Document
       - Project documents
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -826,12 +836,12 @@ paths:
           - xml
       - name: project_id
         in: path
-        description: ID of Project
+        description: Project ID for which the document will be created
         required: true
         schema:
           type: integer
       requestBody:
-        description: Create Document
+        description: Request body for document creation
         required: true
         content:
           application/json:
@@ -845,7 +855,7 @@ paths:
               "$ref": "#/components/schemas/ProjectDocumentApiRequest"
       responses:
         '201':
-          description: created
+          description: Document created
           content:
             application/json:
               schema:
@@ -885,12 +895,14 @@ paths:
   "/easy_async_exports.{format}":
     get:
       summary: List of EasyAsyncExports
-      description: For filtering send parameter `set_filter=1` and specify filters
+      description: Lists all asynchronous exports.<br/>
+        For filtering send parameter `set_filter=1` and specify filters.
+      operationId: getAsyncExports
       tags:
       - Easy async export
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -899,29 +911,32 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of current entity
         in: query
+        example: john doe
         schema:
           type: string
       - name: set_filter
         description: enable filter through Easy Query
         in: query
+        example: true
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: Limits the number of returned results. Minimum is 25, maximum is 100.
         in: query
+        example: 100
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: Offset from the first record to retrieve
+        example: 100
         in: query
         schema:
           type: integer
       responses:
         '200':
-          description: ok
+          description: List of async exports
           content:
             application/json:
               schema:
@@ -933,16 +948,19 @@ paths:
                   total_count:
                     type: number
                     example: 75
+                    description: Total count of exports present
                     xml:
                       attribute: true
                   offset:
                     type: number
-                    example: 0
+                    description: Offset applied for the set of returned data
+                    example: 50
                     xml:
                       attribute: true
                   limit:
                     type: number
                     example: 25
+                    description: Limit applied to this request. It describes the maximum number of results returned in the response.
                     xml:
                       attribute: true
                   easy_async_exports:
@@ -959,32 +977,37 @@ paths:
                   total_count:
                     type: number
                     example: 75
+                    description: Total count of exports present
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: Offset applied for the set of returned data
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
                     example: 25
+                    description: Limit applied to this request. It describes the maximum number of results returned in the response.
                     xml:
                       attribute: true
                   easy_async_exports:
                     type: array
+                    description: List of asynchronous exports
                     items:
                       "$ref": "#/components/schemas/EasyAsyncExportApiResponse"
         '401':
           description: not authorized
   "/easy_async_exports/{id}.{format}":
     delete:
-      summary: Destroy EasyAsyncExport
+      summary: Delete EasyAsynchexport
+      description: Delete a single record of EasyAsyncExport using its ID.
       tags:
       - Easy async export
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -994,13 +1017,14 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of EasyAsyncExport
+        description: ID of the EasyAsyncExport
         required: true
+        example: 2
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: EasyAsyncExport deleted
         '401':
           description: not authorized
         '403':
@@ -1021,12 +1045,14 @@ paths:
   "/easy_attendances.{format}":
     get:
       summary: List of EasyAttendances
-      description: For filtering send parameter `set_filter=1` and specify filters
+      operationId: getAttendances
+      description: Lists all easy attendances.<br/>
+        For filtering send parameter `set_filter=1` and specify filters
       tags:
       - Easy attendance
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1035,29 +1061,32 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of current entity
+        example: john doe
         in: query
         schema:
           type: string
       - name: set_filter
         description: enable filter through Easy Query
         in: query
+        example: true
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: Limits the number of returned results. Minimum is 25, maximum is 100.
         in: query
+        example: 100
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: Offset from the first record to retrieve
         in: query
+        example: 50
         schema:
           type: integer
       responses:
         '200':
-          description: ok
+          description: List of attendances
           content:
             application/json:
               schema:
@@ -1069,20 +1098,24 @@ paths:
                   total_count:
                     type: number
                     example: 75
+                    description: Total count of attendances
                     xml:
                       attribute: true
                   offset:
                     type: number
                     example: 0
+                    description: Offset from the first record to retrieve
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: Limit applied to this request. It describes the maximum number of results returned in the response.
                     example: 25
                     xml:
                       attribute: true
                   easy_attendances:
                     type: array
+                    description: List of all attendances
                     items:
                       "$ref": "#/components/schemas/EasyAttendanceApiResponse"
             application/xml:
@@ -1094,32 +1127,38 @@ paths:
                 properties:
                   total_count:
                     type: number
+                    description: Total count of attendances
                     example: 75
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: Offset from the first record to retrieve
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: Limit applied to this request. It describes the maximum number of results returned in the response.
                     example: 25
                     xml:
                       attribute: true
                   easy_attendances:
                     type: array
+                    description: List of all attendances
                     items:
                       "$ref": "#/components/schemas/EasyAttendanceApiResponse"
         '401':
           description: not authorized
     post:
       summary: Create EasyAttendance
+      description: Use this endpoint to create an attendance entry.
+      operationId: createAttendance
       tags:
       - Easy attendance
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1128,7 +1167,7 @@ paths:
           - json
           - xml
       requestBody:
-        description: Create EasyAttendance
+        description: Create EasyAttendance request body
         required: true
         content:
           application/json:
@@ -1142,7 +1181,7 @@ paths:
               "$ref": "#/components/schemas/EasyAttendanceApiRequest"
       responses:
         '201':
-          description: created
+          description: Successfully created attendance entry
           content:
             application/json:
               schema:
@@ -1181,7 +1220,9 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/easy_attendances/{id}.{format}":
     get:
-      summary: Get EasyAttendance
+      summary: Get EasyAttendance record
+      operationId: getAttandance
+      description: Get a single record of EasyAttandance.
       tags:
       - Easy attendance
       parameters:
@@ -1192,7 +1233,7 @@ paths:
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1202,7 +1243,7 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of EasyAttendance
+          description: Successfully retrieved EasyAttendance record
           content:
             application/json:
               schema:
@@ -1231,12 +1272,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
-      summary: Update EasyAttendance
+      summary: Update EasyAttendance record
+      description: Use this endpoint to update details of a EasyAttendance record.<br/>
+        You can update record completely or just partialy. Keep in mind that some custom fields may not be updated due to their settings.
+      operationId: updateAttendance
       tags:
       - Easy attendance
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1246,12 +1290,12 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of EasyAttendance
+        description: ID of EasyAttendance record
         required: true
         schema:
           type: integer
       requestBody:
-        description: Update given EasyAttendance
+        description: Body of a specific EasyAttendance to be updated
         required: true
         content:
           application/json:
@@ -1265,7 +1309,7 @@ paths:
               "$ref": "#/components/schemas/EasyAttendanceApiRequest"
       responses:
         '200':
-          description: updated
+          description: Successfully updated EasyAttendnace record
           content:
             application/json:
               schema:
@@ -1303,12 +1347,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy EasyAttendance
+      summary: Delete EasyAttendance record
+      description: Use this endpoint to completely delete an EasyAttandance record.<br/>
+       Keep in mind that some custom fields may not be updated due to their settings.
+      operationId: deleteAttendance
       tags:
       - Easy attendance
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1324,7 +1371,7 @@ paths:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Successfully deleted EasyAttendance record
         '401':
           description: not authorized
         '403':
@@ -12325,20 +12372,28 @@ components:
           type: integer
           readOnly: true
           example: 1
+          description: ID of the attachment in Easy Software
         filename:
           example: service-agreement.odt
           type: string
+          description: Filename of the attachment
         filesize:
           type: integer
-          example: '451564'
+          example: 451564
+          description: Size of the attachment in bytes
         content_type:
           example: application/vnd.oasis.opendocument.text
           type: string
+          description: Content type of the document. Provides additional information for applications
         content_url:
           format: uri
           type: string
+          example: https://easysoftware.com/file/1
+          description: URL through which the document can be accessed
         description:
           type: string
+          example: This attachment describes the project goal.
+          description: Description of the attachemnt shown to the user
         href_url:
           format: uri
           type: string
@@ -12347,15 +12402,22 @@ components:
           format: uri
           type: string
         author:
-          title: User
+          title: User object
           type: object
           properties:
             id:
               type: integer
-            name: {}
+              example: 15
+              description: ID of the user who uploaded the attachment
+            name:
+              type: string
+              example: John Doe
+              description: Name of the user who created the attachment
         created_on:
           format: date-time
           type: string
+          example: 2001-12-15T02:59:43.1Z
+          description: Datetime when the attachment was created
       xml:
         name: attachment
     AttachmentApiResponse:
@@ -12364,13 +12426,16 @@ components:
           type: integer
           readOnly: true
           example: 1
-      "$ref": "#/components/schemas/Attachment"
+          description: ID of the attachment in Easy Software
+          "$ref": "#/components/schemas/Attachment"
       xml:
         name: attachment
     UploadResponse:
       properties:
         id:
           type: integer
+          example: 1
+          description: ID of the uploaded file
         token:
           type: string
       xml:
@@ -12767,17 +12832,24 @@ components:
     DocumentApiRequest:
       properties:
         title:
-          example: ''
+          example: Project lineout
+          description: Name of the document to be created
           type: string
         description:
-          example: ''
+          example: This document describes project lineout
+          description: Description of the file, shown to the user
           type: string
         project_id:
           type: integer
+          description: ID of the project the document will be linked to
+          example: 15
         category_id:
           type: integer
+          description: ID of the document category, used for filtering
+          example: 3
         custom_fields:
           type: array
+          description: Custom fields to be filled related to the document
           items:
             "$ref": "#/components/schemas/CustomFieldValueApiRequest"
       required:
@@ -12792,38 +12864,52 @@ components:
           type: integer
           readOnly: true
           example: 1
+          description: ID of the document in Easy Software
         title:
-          example: ''
+          example: Project outline
           type: string
+          description: Name of the document
         description:
-          example: ''
+          example: This document describes the project outline
           type: string
+          description: Description of the document shown to the user
         project:
           type: object
+          description: Project parameters object
           readOnly: true
           properties:
             id:
               type: integer
+              description: ID of the project document will be linked to
+              example: 15
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the project document will be linked to
+              example: Easy Project
               xml:
                 attribute: true
         category:
           type: object
           readOnly: true
+          description: Object that describes the category of the document
           properties:
             id:
               type: integer
+              description: ID of the category the document belongs to
+              example: 4
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the category the document belongs to
+              example: Project documents
               xml:
                 attribute: true
         custom_fields:
           type: array
+          description: Array of custom fields related to the document
           xml:
             wrapped: true
           items:
@@ -12838,6 +12924,8 @@ components:
         created_on:
           type: string
           format: date-time
+          description: Date time format when the document was created
+          example: 2001-12-15T02:59:43.1Z
           readOnly: true
       xml:
         name: document
@@ -12851,6 +12939,7 @@ components:
           type: string
         documents:
           type: array
+          description: List of documents related to the project
           items:
             "$ref": "#/components/schemas/DocumentApiResponse"
       title: DocumentsGroup
@@ -12862,18 +12951,19 @@ components:
           type: integer
           readOnly: true
           example: 1
+          description: ID of the asynchronous export
         format:
           type: string
           example: csv
-          description: Export format
+          description: Format of the exported file
         title:
           type: string
           example: Csv export
-          description: Export title
+          description: Title of the export
         filename:
           type: string
           example: tasks.csv
-          description: Export filename
+          description: Name of the exported file
         status:
           type: string
           example: done
@@ -12892,22 +12982,31 @@ components:
             "$ref": "#/components/schemas/Attachment"
         author:
           type: object
+          description: Information about the author of the export who initiated it
           readOnly: true
           properties:
             id:
               type: integer
+              description: ID of the author/initiator of the export
+              example: 15
               xml:
                 attribute: true
             name:
               type: string
+              example: John Doe
+              description: Name of the author/initiator of the export
               xml:
                 attribute: true
         created_at:
           type: string
           format: date-time
           readOnly: true
+          description: Datetime when the export was done
+          example: 2001-12-15T02:59:43.1Z
         updated_at:
           type: string
+          description: Datetime when the export was updated
+          example: 2001-12-15T02:59:43.1Z
           format: date-time
           readOnly: true
       xml:
@@ -12916,21 +13015,26 @@ components:
       properties:
         user_id:
           type: integer
+          example: 15
+          description: ID of the user the attendance relates to
         arrival:
           type: string
           example: '2020-12-03T00:00:00Z'
-          description: ''
+          description: Datetime of the beginning of the attendance session
           format: datetime
         departure:
           type: string
           example: '2020-12-03T23:30:00Z'
-          description: ''
+          description: Datetime of the end of the attendance session
           format: datetime
         edited_by_id:
           type: integer
+          example: 3
+          description: ID of the user who updated the attendance record
         edited_when:
           type: string
-          description: ''
+          description: Datetime of the last time the attendance record was updated.
+          example: '2020-12-03T23:30:00Z'
           format: datetime
         locked:
           type: boolean
@@ -12938,10 +13042,14 @@ components:
           type: string
           format: date-time
           readOnly: true
+          example: '2020-12-03T23:30:00Z'
+          description: Datetime when the attendance record was created
         updated_at:
           type: string
           format: date-time
           readOnly: true
+          example: '2020-12-03T23:30:00Z'
+          description: Datetime when the attendance record was updated
         arrival_user_ip:
           type: string
           example: 79.98.112.115
@@ -12983,22 +13091,22 @@ components:
           type: boolean
         arrival_latitude:
           type: number
-          example: '50.04'
+          example: 50.04
           format: float
           readOnly: true
         arrival_longitude:
           type: number
-          example: '14.98'
+          example: 14.98
           format: float
           readOnly: true
         departure_latitude:
           type: number
-          example: '50.04'
+          example: 50.04
           format: float
           readOnly: true
         departure_longitude:
           type: number
-          example: '14.98'
+          example: 14.98
           format: float
           readOnly: true
         time_zone:
@@ -13015,9 +13123,10 @@ components:
           readOnly: true
         hours:
           type: number
-          example: '23.5'
+          example: 23.5
           format: float
           readOnly: true
+          description: Calculated number of hours of the attendance. Represents difference between 'arrival' and 'departure'
         easy_attendance_activity_id:
           type: integer
       required:
@@ -13032,27 +13141,33 @@ components:
           type: integer
           readOnly: true
           example: 1
+          description: ID of the attendance entry
         user:
           type: object
           readOnly: true
+          description: Object containing user information
           properties:
             id:
               type: integer
+              description: ID of the user in Easy Software related to the attendance
+              example: 15
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the user in Easy Software related to the attendance
+              example: John Deere
               xml:
                 attribute: true
         arrival:
           type: string
           example: '2020-12-03T00:00:00Z'
-          description: ''
+          description: Datetime of the beginning of the attendance session
           format: datetime
         departure:
           type: string
           example: '2020-12-03T23:30:00Z'
-          description: ''
+          description: Datetime of the end of the attendance session
           format: datetime
         edited_by:
           type: object
@@ -13060,25 +13175,34 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the user in Easy Software who edited the attendance
+              example: 14
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the user in Easy Software who edited the attendance
+              example: John Doe
               xml:
                 attribute: true
         edited_when:
           type: string
-          description: ''
+          description: Datetime when the attendance record was last edited
+          example: '2020-12-03T23:30:00Z'
           format: datetime
         locked:
           type: boolean
         created_at:
           type: string
           format: date-time
+          description: Datetime when the attendance record was created
+          example: '2020-12-03T23:30:00Z'
           readOnly: true
         updated_at:
           type: string
           format: date-time
+          example: '2020-12-03T23:30:00Z'
+          description: Datetime when the attendance record was updated 
           readOnly: true
         arrival_user_ip:
           type: string
@@ -13110,7 +13234,9 @@ components:
           type: string
         description:
           type: string
-        approval_status:
+          example: This attendance was regarding doctor visit
+          description: Description of the attendance shown to the user
+         approval_status:
           enum:
           - 1
           - 2
@@ -13126,37 +13252,42 @@ components:
           properties:
             id:
               type: integer
+              example: 17
+              description: ID of the user in Easy Software who approved the attendance
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the user in Easy Software who approved the attendance
+              example: John Doe
               xml:
                 attribute: true
         approved_at:
           type: string
-          description: ''
+          description: Datetime when the attendance record was approved
+          example: '2020-12-03T23:30:00Z'
           format: datetime
           readOnly: true
         previous_approval_status:
           type: boolean
         arrival_latitude:
           type: number
-          example: '50.04'
+          example: 50.04
           format: float
           readOnly: true
         arrival_longitude:
           type: number
-          example: '14.98'
+          example: 14.98
           format: float
           readOnly: true
         departure_latitude:
           type: number
-          example: '50.04'
+          example: 50.04
           format: float
           readOnly: true
         departure_longitude:
           type: number
-          example: '14.98'
+          example: 14.98
           format: float
           readOnly: true
         time_zone:
@@ -13173,11 +13304,13 @@ components:
           readOnly: true
         hours:
           type: number
-          example: '23.5'
+          example: 23.5
           format: float
           readOnly: true
+          description: Calculated number of hours of the attendance. Represents difference between 'arrival' and 'departure'
         easy_attendance_activity:
           type: object
+          description: Object of specific attendance activities related to the root attendance
           "$ref": "#/components/schemas/EasyAttendanceActivityApiResponse"
       xml:
         name: easy_attendance
@@ -13185,6 +13318,7 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the specific attendance activity
           readOnly: true
           example: 1
         name:
@@ -19076,15 +19210,20 @@ components:
     ProjectDocumentApiRequest:
       properties:
         title:
-          example: ''
+          example: Project outline.docx
+          description: Name of the document
           type: string
         description:
-          example: ''
+          example: This document describes the project outline
+          description: Description of the document shown to the user
           type: string
         category_id:
           type: integer
+          description: ID of the category the document is related to
+          example: 3
         custom_fields:
           type: array
+          description: List of custom fields related to the document
           items:
             "$ref": "#/components/schemas/CustomFieldValueApiRequest"
       required:
@@ -20145,4 +20284,6 @@ components:
     key:
       type: apiKey
       name: key
+      in: query
+: key
       in: query
