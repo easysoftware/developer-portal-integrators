@@ -9530,12 +9530,16 @@ paths:
   "/roles.{format}":
     get:
       summary: List of Roles
-      description: For filtering send parameter `set_filter=1` and specify filters
+      operationId: ListOfRoles
+      description: Use this method to list of all roles. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) in the <b>Path</b>. You can fill parameters in the <b>Query</b> to specify your request.<br/>
+        As a response, you can see the list of roles. <br/>
+        See the schema below.
       tags:
       - Role
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9544,29 +9548,29 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of the current entity.
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        description: Enable filter through the Easy Query.
         in: query
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: The number of items to be present in the response. Default is
+          25, maximum is 100.
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: The offset of the first object to retrieve.
         in: query
         schema:
           type: integer
       responses:
         '200':
-          description: ok
+          description: OK
           content:
             application/json:
               schema:
@@ -9625,17 +9629,22 @@ paths:
   "/roles/{id}.{format}":
     get:
       summary: Get Role
+      operationId: GetRole
+      description: Use this method to get detail about role. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the role (<i>id</i>) in to the <b>Path</b>. <br/>
+        As a response, you can see the details about role. <br/>
+        See the schema below.
       tags:
       - Role
       parameters:
       - name: id
         in: path
-        description: ID of Role
+        description: ID of the role.
         required: true
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9740,12 +9749,17 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/search.{format}":
     get:
+      operationId: Search
       summary: Search
+      description: Use this method to search through the Easy project <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) in the <b>Path</b>. You can fill parameters in the Query to specify your request.<br/>
+        As a response, you can see the results of your search. <br/>
+        See the schema below.
       tags:
       - Search
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9755,32 +9769,32 @@ paths:
           - xml
       - name: q
         in: query
-        description: Search query string
+        description: Search query string.
         example: man on the moon
         required: true
         schema:
           type: string
       - name: open_issues
         in: query
-        description: Search only open issues
+        description: Search only open issues.
         required: false
         schema:
           type: boolean
       - name: internal_users
         in: query
-        description: Search only internal users
+        description: Search only internal users.
         required: false
         schema:
           type: boolean
       - name: scope
         in: query
-        description: Project ID for search scope
+        description: Project ID for search scope.
         required: false
         schema:
           type: integer
       responses:
         '200':
-          description: ok
+          description: Results of the search.
           content:
             application/json:
               schema:
@@ -19194,22 +19208,20 @@ components:
               description: Inherit time entry activities
       xml:
         name: project_template
-    RoleApiRequest:
-      xml:
-        name: role
     RoleApiResponse:
       properties:
         id:
           type: integer
           readOnly: true
+          description: ID of the role.
           example: 1
         name:
           type: string
           example: Director (C-level) role
-          description: Name
+          description: Name of the role.
         assignable:
           type: boolean
-          description: Tasks can be assigned to this role
+          description: Tasks can be assigned to this role.
         permissions:
           type: array
           items:
@@ -19224,21 +19236,21 @@ components:
           - all
           - default
           - own
-          description: Tasks visibility
+          description: Tasks visibility. Use one of allowed values.
         users_visibility:
           type: string
           example: all
           enum:
           - all
           - members_of_visible_projects
-          description: Users visibility
+          description: Users visibility.
         time_entries_visibility:
           type: string
           example: all
           enum:
           - all
           - own
-          description: Spent time visibility
+          description: Spent time visibility.
       xml:
         name: role
     SearchApiResponse:
