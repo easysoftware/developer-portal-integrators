@@ -9864,13 +9864,17 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/templates.{format}":
     get:
-      summary: Get all ProjectTemplate
-      description: For filtering send parameter `set_filter=1` and specify filters
+      summary: Get all ProjectTemplates
+      operationId: GetAllProjectTemplates
+      description: Use this method to get all project templates. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) in to the <b>Path</b> and fill parameters to the <b>Query</b>.<br/>
+        As a response, you can see list of all project templates all possible parameters. <br/>
+        See the schema below.
       tags:
       - Project template
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9879,23 +9883,23 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of the cucurrent entity
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        descriptionE enable filter througthe h Easy Que.ry
         in: query
         schema:
           type: string
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        descriptionT the number of items to be present in the respon.sD(default is
+          25, maximum is 1.0)
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        descriptionT the offset of the first object to retrie.ve
         in: query
         schema:
           type: integer
@@ -9943,11 +9947,14 @@ paths:
   "/templates/{id}/add.{format}":
     get:
       summary: Add ProjectTemplate
+      operationId: AddProjectTemplate
+      description: Use this method to add project template. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the source template (<i>id</i>) in to the <b>Path</b>.<br/>
       tags:
       - Project template
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9957,13 +9964,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: Id of the project
+        description: ID of the project.
         required: true
         schema:
           type: string
       responses:
         '204':
-          description: ok
+          description: OK
         '401':
           description: not authorized
         '403':
@@ -9993,11 +10000,14 @@ paths:
   "/templates/{id}/restore.{format}":
     get:
       summary: Restore ProjectTemplate
+      operationId: RestoreProjectTemplate
+      description: Use this method to restore project template. <br/>
+        To successfully call a method, specify the format of the response (<i>format</i>) and ID of the template (<i>id</i>) in to the <b>Path</b>.<br/>
       tags:
       - Project template
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10007,13 +10017,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: Id of the template
+        description: ID of the template.
         required: true
         schema:
           type: string
       responses:
         '204':
-          description: ok
+          description: Project template was restored.
         '401':
           description: not authorized
         '403':
@@ -10043,11 +10053,16 @@ paths:
   "/templates/{id}/create.{format}":
     post:
       summary: Create project from template
+      operationId: CreateProjectFromTemplate
+      description: Use this method to create project from template. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the source template (<i>id</i>) in to the <b>Path</b>.<br/>
+        As a response, you can see the creted template with all possible parameters. <br/>
+        See the schema below.
       tags:
       - Project template
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10057,7 +10072,7 @@ paths:
           - xml
       - name: id
         in: path
-        description: Id of the source template
+        description: ID of the source template.
         required: true
         schema:
           type: string
@@ -10115,11 +10130,16 @@ paths:
   "/templates/{id}/copy.{format}":
     post:
       summary: Copy template into existing project
+      operationId: CopytemplateIntoExistingProject
+      description: Use this method to copy template into existing project. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the source template (<i>id</i>) in to the <b>Path</b> and fill template parameters in to the <b>Body</b>.<br/>
+        As a response, you can see the copied template with all possible parameters. <br/>
+        See the schema below.
       tags:
       - Project template
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10129,7 +10149,7 @@ paths:
           - xml
       - name: id
         in: path
-        description: Id of the source template
+        description: ID of the source template.
         required: true
         schema:
           type: string
@@ -10186,12 +10206,15 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/templates/{id}/destroy.{format}":
     delete:
-      summary: Destroy ProjectTemplate
+      operationId: DeleteProjectTemplate
+      summary: Delete ProjectTemplate
+      description: Use this method to delete project template. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the template (<i>id</i>) to the <b>Path</b>.<br/>
       tags:
       - Project template
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10201,13 +10224,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: Id of the template to be deleted
+        description: ID of the template.
         required: true
         schema:
           type: string
       responses:
         '204':
-          description: ok
+          description: Project template was deleted.
         '401':
           description: not authorized
         '403':
@@ -10228,12 +10251,15 @@ paths:
   "/test_case_issue_execution_results.{format}":
     get:
       summary: List of TestCaseIssueExecutionResults
-      description: For filtering send parameter `set_filter=1` and specify filters
+      description: Use this method to get details about test case issue execution results. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) in the <b>Path</b> and list parameters in the <b>Query</b>.<br/>
+        As a response, you can see the list of test case issue executions results. <br/>
+        See the schema below.
       tags:
       - Test case issue execution result
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10242,29 +10268,29 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of thecurrent entity.
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        description: Enable filter through the Easy Query.
         in: query
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: The number of items to be present in the response. Default is
+          25, maximum is 100.
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: The offset of the first object to retrieve.
         in: query
         schema:
           type: integer
       responses:
         '200':
-          description: ok
+          description: OK
           content:
             application/json:
               schema:
@@ -10323,12 +10349,15 @@ paths:
   "/test_case_issue_executions.{format}":
     get:
       summary: List of TestCaseIssueExecutions
-      description: For filtering send parameter `set_filter=1` and specify filters
+      description: Use this method to get list of  test case issue executions. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the test case (<i>id</i>) in the <b>Path</b> and parameters to the <b>Query</b>.<br/>
+        As a response, you can see list of current test case issue executions. <br/>
+        See the schema below.
       tags:
       - Test case issue execution
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10337,29 +10366,29 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of the current entity.
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        description: Enable filter through the Easy Query.
         in: query
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: The number of items to be present in the response. Default is
+          25, maximum is 100.
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: The offset of the first object to retrieve.
         in: query
         schema:
           type: integer
       responses:
         '200':
-          description: ok
+          description: OK
           content:
             application/json:
               schema:
@@ -10370,16 +10399,19 @@ paths:
                 properties:
                   total_count:
                     type: number
+                    description: Total count of test case issue executions.
                     example: 75
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: Test case issue executions offset.
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: Test case issue executions list limit.
                     example: 25
                     xml:
                       attribute: true
@@ -10416,12 +10448,17 @@ paths:
         '401':
           description: not authorized
     post:
-      summary: Create TestCaseIssueExecutio
+      summary: Create TestCaseIssueExecution
+      operationId: CreateTestCaseIssueExecution
+      description: Use this method to create new test case issue execution. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) to the <b>Path</b>, test case ID (<i>id</i>) to the <b>Query</b> and test case issue execution parameters to the <b>Body</b>.<br/>
+        As a response, you can see your creted test case issue executions. <br/>
+        See the schema below.
       tags:
       - Test case issue execution
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10431,7 +10468,7 @@ paths:
           - xml
       - name: test_case_id
         required: true
-        description: Test case ID
+        description: Test case ID.
         in: query
         schema:
           type: string
@@ -10457,7 +10494,7 @@ paths:
                   "$ref": "#/components/schemas/TestCaseIssueExecutionApiRequest"
       responses:
         '200':
-          description: ok
+          description: Test case issue executions was created.
           content:
             application/json:
               schema:
@@ -10502,17 +10539,22 @@ paths:
   "/test_case_issue_executions/{id}.{format}":
     get:
       summary: Get TestCaseIssueExecution
+      operationId: GetTestCaseIssueExectution
+      description: Use this method to get details about test case issue execution. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and  ID of the test case (<i>id</i>) in the <b>Path</b>.<br/>
+        As a response, you can see the details of your current test case issue execution. <br/>
+        See the schema below.
       tags:
       - Test case issue execution
       parameters:
       - name: id
         in: path
-        description: ID of TestCaseIssueExecution
+        description: ID of the test case issue execution.
         required: true
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10522,7 +10564,7 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of TestCaseIssueExecution
+          description: Details of the test case issue execution.
           content:
             application/json:
               schema:
@@ -10552,11 +10594,16 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update TestCaseIssueExecution
+      operationId: UpdateTestCaseIssueExecution
+      description: Use this method to update details about test case issue execution. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and  ID of the test case (<i>id</i>) in the <b>Path</b> and parameters you want to change it to the <b>Body</b>. <br/>
+        As a response, you can see the changed details of your current test case issue execution. <br/>
+        See the schema below.
       tags:
       - Test case issue execution
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10566,7 +10613,7 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of TestCaseIssueExecution
+        description: ID of the test case issue execution.
         required: true
         schema:
           type: integer
@@ -10585,7 +10632,7 @@ paths:
               "$ref": "#/components/schemas/TestCaseIssueExecutionApiRequest"
       responses:
         '200':
-          description: updated
+          description: Test case issue execution was updated.
           content:
             application/json:
               schema:
@@ -10623,12 +10670,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy TestCaseIssueExecution
+      summary: Delete TestCaseIssueExecution
+      operationId: DeleteTestCaseIssueExecution
+      description: Use this method to delete test case issue execution. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and  ID of the test case (<i>id</i>) in the <b>Path</b>. <br/>
       tags:
       - Test case issue execution
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -10638,13 +10688,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of TestCaseIssueExecution
+        description: ID of the test case issue execution.
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Test case issue execution was deleted.
         '401':
           description: not authorized
         '403':
@@ -18894,30 +18944,39 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the project.
           readOnly: true
           example: 1
         easy_external_id:
+          description: ID of the easy external.
           example: external-system-1
           type: string
         name:
           example: Blue 2
+          description: Name of the project.
           type: string
         homepage:
           example: blue-2
+          description: Homepage of the project.
           type: string
         description:
           example: I can’t abide these Jawas. Disgusting creatures.
           type: string
+          description: Description of the project
         parent:
           type: object
           readOnly: true
           properties:
             id:
               type: integer
+              description: ID of the parent.
+              example: 10
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the parent.
+              example: My parent name.
               xml:
                 attribute: true
         author:
@@ -18926,23 +18985,30 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the author.
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the author.
               xml:
                 attribute: true
         is_planned:
           type: boolean
+          description: This project is planned.
+          example: true
         easy_is_easy_template:
           type: boolean
-          description: Is this project a template?
+          description: This project is a template.
+          example: true
         easy_start_date:
           format: date
           type: string
+          description: Date and time when easy project started.
         easy_due_date:
           format: date
           type: string
+          description: Date and time when easy project due.
         custom_fields:
           type: array
           xml:
@@ -18951,7 +19017,7 @@ components:
             "$ref": "#/components/schemas/CustomFieldValueApiResponse"
         tag_list:
           type: array
-          description: List of tags associated with entity
+          description: List of tags associated with entity.
           example:
           - deployment
           - gantt
@@ -18961,50 +19027,54 @@ components:
         status:
           readOnly: true
           enum:
-          - 1
-          - 5
-          - 9
-          - 15
-          - 19
+          - "1"
+          - "5"
+          - "9"
+          - "15"
+          - "19"
           example: '1'
           description: |-
             1 = ACTIVE
-
             5 = CLOSED
-
             9 = ARCHIVED
-
             15 = PLANNED
-
             19 = DELETED
           type: string
         identifier:
           readOnly: true
           example: blue2
+          description: Project identifier.
           type: string
         sum_time_entries:
           type: integer
           readOnly: true
+          description: Summarize time spend on the project.
         sum_estimated_hours:
           type: integer
           readOnly: true
+          description: Summarize time estimated on the project.
         currency:
           readOnly: true
           type: string
+          description: Current currency used on project.  
         created_on:
           type: string
           format: date-time
           readOnly: true
+          description: Date and time when project was created.
         updated_on:
           type: string
           format: date-time
           readOnly: true
+          description: Date and time when project was updated.
         start_date:
           format: date
           type: string
+          description: Date when project started.
         due_date:
           format: date
           type: string
+          description: Due project date.
         trackers:
           type: array
           description: if you specify `include=trackers`
@@ -19015,16 +19085,20 @@ components:
             properties:
               id:
                 type: integer
-                example: '1'
+                example: 1
+                description: ID of the trackers.
               name:
                 example: bug
                 type: string
+                description: Name of the trackers.
               internal_name:
                 example: easy_bug
                 type: string
+                description: Internal name of the trackers.
               easy_external_id:
                 example: easy_bug
                 type: string
+                description: Easy external ID of the tracker.
         issue_categories:
           type: array
           description: if you specify `include=issue_categories`
@@ -19035,8 +19109,10 @@ components:
             properties:
               id:
                 type: integer
+                description: ID of the issue category.
               name:
                 type: string
+                description: Name of the issue category.
         time_entry_activities:
           type: array
           description: if you specify `include=time_entry_activities`
@@ -19047,11 +19123,13 @@ components:
             properties:
               id:
                 type: integer
+                description: ID of the time entry activity.
               name:
                 type: string
+                description: Name of the time entry activity.
         enabled_modules:
           type: array
-          description: if you specify `include=enabled_modules`
+          description: In case of you specify `include=enabled_modules`.
           items:
             title: EnabledModule
             type: object
@@ -19059,17 +19137,19 @@ components:
             properties:
               id:
                 type: integer
+                description: ID of the enable module.
               name:
                 type: string
+                description: Name of the enable module.
         scheduled_for_destroy:
           type: boolean
-          description: indicates if the project has been scheduled to be deleted
+          description: Indicates if the project has been scheduled to be deleted.
           readOnly: true
         destroy_at:
           type: string
           format: date-time
-          description: the date when the project is expected to be deleted; is shown
-            only if the project has been scheduled to be deleted
+          description: The date when the project is expected to be deleted; is shown
+            only if the project has been scheduled to be deleted.
           readOnly: true
       xml:
         name: project
@@ -19105,11 +19185,11 @@ components:
                 type:
                   type: string
                   example: EasyContact
-                  description: Entity class
+                  description: Entity class.
                 id:
                   type: string
                   example: '6'
-                  description: Entity id
+                  description: Entity ID.
             project:
               type: array
               items:
@@ -19119,11 +19199,11 @@ components:
                   id:
                     type: string
                     example: '188'
-                    description: Id of the source template
+                    description: ID of the source template.
                   name:
                     type: string
                     example: Help Desk
-                    description: Name of new project
+                    description: Name of the new project.
                   custom_field_values:
                     type: array
                     xml:
@@ -19133,12 +19213,12 @@ components:
             parent_id:
               type: string
               example: '15'
-              description: Parent project id
+              description: ID of the parent project.
             start_date:
               type: string
               format: date
               example: '2021-02-02'
-              description: Date to update target project with when "dates_settings"="update_dates"
+              description: Date to update target project with when "dates_settings"="update_dates".
             dates_settings:
               type: string
               example: update_settings
@@ -19146,19 +19226,19 @@ components:
               - update_dates
               - match_starting_dates
               - do_not_change_any_dates
-              description: Project entities date settings
+              description: Project entities date settings.
             change_issues_author:
               type: string
               example: '32'
-              description: Change author of all tasks to the given user id
+              description: Change author of all tasks to the given user ID.
             inherit_time_entry_activities:
               type: string
               example: '1'
-              description: Inherit time entry activities
+              description: Inherit time entry activities.
         notifications:
           type: string
           example: '1'
-          description: Send e-mail notifications
+          description: Send e-mail notifications.
       xml:
         name: project_template
     CopyProjectTemplateApiRequest:
@@ -19364,14 +19444,24 @@ components:
       properties:
         author_id:
           type: integer
+          description: ID of the author.
+          example: 10
         issue_id:
           type: integer
+          description: ID of the issue.
+          example: 10
         test_case_id:
           type: integer
+          description: ID of the test case.
+          example: 10
         test_case_issue_execution_result_id:
           type: integer
+          description: ID of the test case issue execution result.
+          example: 10
         comments:
           type: string
+          description: You comments to test case issue execution result.
+          example: My test case issue execution comment.
         attachments:
           type: array
           description: if you specify `include=attachments`
@@ -19387,6 +19477,7 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the test case issue execution.    
           readOnly: true
           example: 1
         author:
@@ -19395,10 +19486,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the author.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the author.
+              example: My author name.
               xml:
                 attribute: true
         issue:
@@ -19407,10 +19502,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the issue.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the issue.
+              example: My issue name.
               xml:
                 attribute: true
         test_case:
@@ -19419,10 +19518,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the test case.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the test case.
+              example: My test case name.
               xml:
                 attribute: true
         test_case_issue_execution_result:
@@ -19431,17 +19534,21 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the test case issue execution.
+              example: 12
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the test case issue execution.
+              example: My test case issue execution name.
               xml:
                 attribute: true
         comments:
           type: string
         attachments:
           type: array
-          description: if you specify `include=attachments`
+          description: In case of you specify `include=attachments`.
           xml:
             wrapped: true
           items:
