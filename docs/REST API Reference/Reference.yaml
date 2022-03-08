@@ -589,7 +589,9 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/documents/{id}.{format}":
     get:
-      summary: Get Document
+      summary: Get Document by ID
+      description: Get specific document and its information.
+      operationId: getDocument
       tags:
       - Document
       parameters:
@@ -600,7 +602,7 @@ paths:
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -610,7 +612,7 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of Document
+          description: Retrieved detail of the Document
           content:
             application/json:
               schema:
@@ -640,11 +642,13 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update Document
+      description: Use this endpoint to update information of a document.
+      operationId: updateDocument
       tags:
       - Document
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of response
         in: path
         required: true
         schema:
@@ -659,7 +663,7 @@ paths:
         schema:
           type: integer
       requestBody:
-        description: Update given Document
+        description: Request body of the document to be updated
         required: true
         content:
           application/json:
@@ -673,7 +677,7 @@ paths:
               "$ref": "#/components/schemas/DocumentApiRequest"
       responses:
         '200':
-          description: updated
+          description: Document successfully updated
           content:
             application/json:
               schema:
@@ -711,12 +715,14 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy Document
+      summary: Delete Document
+      description: Use this endpoint to delete a specific document
+      operationId: deleteDocument
       tags:
       - Document
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of response
         in: path
         required: true
         schema:
@@ -732,7 +738,7 @@ paths:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Document deleted
         '401':
           description: not authorized
         '403':
@@ -752,13 +758,15 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/projects/{project_id}/documents.{format}":
     get:
-      summary: Retrieve documents of the Project with specified id
+      summary: Retrieve all documents of the Project with a specified ID
+      description: Retrieve all documents related to the project specified by ID
+      operationId: getDocumentsForProject
       tags:
       - Document
       - Project documents
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -768,7 +776,7 @@ paths:
           - xml
       - name: project_id
         in: path
-        description: ID of Project
+        description: Project ID for which the documents will be retrieved
         required: true
         schema:
           type: integer
@@ -811,12 +819,14 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     post:
       summary: Create a document in the Project with specified id
+      description: Create a document for a specific project.
+      operationId: createDocumentForProject
       tags:
       - Document
       - Project documents
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -826,12 +836,12 @@ paths:
           - xml
       - name: project_id
         in: path
-        description: ID of Project
+        description: Project ID for which the document will be created
         required: true
         schema:
           type: integer
       requestBody:
-        description: Create Document
+        description: Request body for document creation
         required: true
         content:
           application/json:
@@ -845,7 +855,7 @@ paths:
               "$ref": "#/components/schemas/ProjectDocumentApiRequest"
       responses:
         '201':
-          description: created
+          description: Document created
           content:
             application/json:
               schema:
@@ -12325,20 +12335,28 @@ components:
           type: integer
           readOnly: true
           example: 1
+          description: ID of the attachment in Easy Software
         filename:
           example: service-agreement.odt
           type: string
+          description: Filename of the attachment
         filesize:
           type: integer
-          example: '451564'
+          example: 451564
+          description: Size of the attachment in bytes
         content_type:
           example: application/vnd.oasis.opendocument.text
           type: string
+          description: Content type of the document. Provides additional information for applications
         content_url:
           format: uri
           type: string
+          example: https://easysoftware.com/file/1
+          description: URL through which the document can be accessed
         description:
           type: string
+          example: This attachment describes the project goal.
+          description: Description of the attachemnt shown to the user
         href_url:
           format: uri
           type: string
@@ -12347,15 +12365,22 @@ components:
           format: uri
           type: string
         author:
-          title: User
+          title: User object
           type: object
           properties:
             id:
               type: integer
-            name: {}
+              example: 15
+              description: ID of the user who uploaded the attachment
+            name:
+              type: string
+              example: John Doe
+              description: Name of the user who created the attachment
         created_on:
           format: date-time
           type: string
+          example: 2001-12-15T02:59:43.1Z
+          description: Datetime when the attachment was created
       xml:
         name: attachment
     AttachmentApiResponse:
@@ -12364,13 +12389,16 @@ components:
           type: integer
           readOnly: true
           example: 1
-      "$ref": "#/components/schemas/Attachment"
+          description: ID of the attachment in Easy Software
+          "$ref": "#/components/schemas/Attachment"
       xml:
         name: attachment
     UploadResponse:
       properties:
         id:
           type: integer
+          example: 1
+          description: ID of the uploaded file
         token:
           type: string
       xml:
@@ -12767,17 +12795,24 @@ components:
     DocumentApiRequest:
       properties:
         title:
-          example: ''
+          example: Project lineout
+          description: Name of the document to be created
           type: string
         description:
-          example: ''
+          example: This document describes project lineout
+          description: Description of the file, shown to the user
           type: string
         project_id:
           type: integer
+          description: ID of the project the document will be linked to
+          example: 15
         category_id:
           type: integer
+          description: ID of the document category, used for filtering
+          example: 3
         custom_fields:
           type: array
+          description: Custom fields to be filled related to the document
           items:
             "$ref": "#/components/schemas/CustomFieldValueApiRequest"
       required:
@@ -12792,38 +12827,52 @@ components:
           type: integer
           readOnly: true
           example: 1
+          description: ID of the document in Easy Software
         title:
-          example: ''
+          example: Project outline
           type: string
+          description: Name of the document
         description:
-          example: ''
+          example: This document describes the project outline
           type: string
+          description: Description of the document shown to the user
         project:
           type: object
+          description: Project parameters object
           readOnly: true
           properties:
             id:
               type: integer
+              description: ID of the project document will be linked to
+              example: 15
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the project document will be linked to
+              example: Easy Project
               xml:
                 attribute: true
         category:
           type: object
           readOnly: true
+          description: Object that describes the category of the document
           properties:
             id:
               type: integer
+              description: ID of the category the document belongs to
+              example: 4
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the category the document belongs to
+              example: Project documents
               xml:
                 attribute: true
         custom_fields:
           type: array
+          description: Array of custom fields related to the document
           xml:
             wrapped: true
           items:
@@ -12838,6 +12887,8 @@ components:
         created_on:
           type: string
           format: date-time
+          description: Date time format when the document was created
+          example: 2001-12-15T02:59:43.1Z
           readOnly: true
       xml:
         name: document
@@ -12851,6 +12902,7 @@ components:
           type: string
         documents:
           type: array
+          description: List of documents related to the project
           items:
             "$ref": "#/components/schemas/DocumentApiResponse"
       title: DocumentsGroup
@@ -19076,15 +19128,20 @@ components:
     ProjectDocumentApiRequest:
       properties:
         title:
-          example: ''
+          example: Project outline.docx
+          description: Name of the document
           type: string
         description:
-          example: ''
+          example: This document describes the project outline
+          description: Description of the document shown to the user
           type: string
         category_id:
           type: integer
+          description: ID of the category the document is related to
+          example: 3
         custom_fields:
           type: array
+          description: List of custom fields related to the document
           items:
             "$ref": "#/components/schemas/CustomFieldValueApiRequest"
       required:
