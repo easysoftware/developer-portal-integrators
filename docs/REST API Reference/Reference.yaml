@@ -392,13 +392,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     get:
-      summary: List of CustomFields
-      description: ''
+      summary: List of Custom Fields
+      operationId: getCustomFields
+      description: Use this endpoint to retrieve custom fields <br/>
+       In response you get all custom fields related to the project.
       tags:
       - Custom field
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of response
         in: path
         required: true
         schema:
@@ -408,7 +410,7 @@ paths:
           - xml
       responses:
         '200':
-          description: ok
+          description: Details of custom fields
           content:
             application/json:
               schema:
@@ -437,17 +439,20 @@ paths:
   "/custom_fields/{id}.{format}":
     get:
       summary: Get CustomField
+      operationId: getCustomField
+      description: Retrieve information of a specific custom field.<br/>
+       Use ID of the custom field to get its information.
       tags:
       - Custom field
       parameters:
       - name: id
         in: path
-        description: ID of CustomField
+        description: ID of the custom field
         required: true
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify format of the response
         in: path
         required: true
         schema:
@@ -457,7 +462,7 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of CustomField
+          description: Detail of a specified custom field
           content:
             application/json:
               schema:
@@ -487,11 +492,14 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update CustomField
+      operationId: updateCustomField
+      description: Update data of a specific custom field.<br/>
+       Use this enpoint if you want to update definition of a specific custom field.
       tags:
       - Custom field
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response
         in: path
         required: true
         schema:
@@ -501,7 +509,7 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of CustomField
+        description: ID of the custom field
         required: true
         schema:
           type: integer
@@ -520,7 +528,7 @@ paths:
               "$ref": "#/components/schemas/CustomFieldApiRequest"
       responses:
         '204':
-          description: ok
+          description: Successfully updated
         '401':
           description: not authorized
         '403':
@@ -548,12 +556,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy CustomField
+      summary: Delete a custom field
+      operationId: deleteCustomField
+      description: Delete a custom field.<br/>
+       Use this endpoint to remove a custom field.
       tags:
       - Custom field
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response
         in: path
         required: true
         schema:
@@ -563,13 +574,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of CustomField
+        description: ID of the custom field
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Successfully deleted
         '401':
           description: not authorized
         '403':
@@ -12404,8 +12415,8 @@ components:
       properties:
         name:
           type: string
-          example: auta
-          description: Name of custom field
+          example: Custom identifier
+          description: Name of the custom field
         field_format:
           type: string
           example: list
@@ -12439,66 +12450,82 @@ components:
           - flag
         regexp:
           type: string
-          description: Regular expression
+          description: Regular expression applicable for the custom field
+          example: ([+]?\d{1,3}[. \s]?)?(\d{9}?)
         min_length:
           type: integer
-          description: Minimum length
+          description: Minimum length to be entered
+          example: 3
         max_length:
           type: integer
-          description: Maximum length
+          description: Maximum length to be entered
+          example: 15
         is_required:
           type: boolean
-          description: Required
+          description: Whether the field is required
+          example: true
         is_for_all:
           type: boolean
-          description: For all projects
+          description: Whether the field will be visible for all projects
+          example: true
         is_filter:
           type: boolean
-          description: Used as a filter
+          description: Whether the field can be used as a filter
+          example: true
         position:
           type: integer
           example: 2
           description: Position of custom field in list
         searchable:
           type: boolean
-          description: is searchable ?
+          description: Whether the field can be searchable
+          example: true
         default_value:
           type: string
           description: Default value
+          example: John Doe
         editable:
           type: boolean
-          description: Editable
+          description: Whether the field can be edited
+          example: true
         visible:
           type: boolean
-          description: Visible
+          description: Whether the field is visible
+          example: true
         multiple:
           type: boolean
-          description: Multiple values
+          description: Whether the field can be of multiple values
+          example: true
         description:
           type: string
-          description: Description
+          description: Description to be shown to the users
+          example: Custom identifier used for identification
         is_primary:
           type: boolean
           description: Primary
+          example: true
         show_empty:
           type: boolean
           description: Show with empty fields
+          example: true
         show_on_list:
           type: boolean
           description: Show in list
+          example: true
         settings:
           type: string
           description: Its Hash object
         internal_name:
           type: string
-          description: ''
+          description: Internal name of the field
+          example: internalCustomIdentifier
         show_on_more_form:
           type: boolean
-          example: 'true'
+          example: true
           description: Show as additional attribute
         easy_external_id:
           type: string
-          description: ''
+          description: External ID of the custom field
         easy_min_value:
           type: number
           format: float
@@ -12509,7 +12536,7 @@ components:
           description: ''
         mail_notification:
           type: boolean
-          example: 'true'
+          example: true
           description: Email notifications
         easy_group_id:
           type: integer
@@ -12538,12 +12565,12 @@ components:
           example: 1
         name:
           type: string
-          example: auta
-          description: Name of custom field
+          example: Custom identifier
+          description: Name of the custom field
         field_format:
           type: string
           example: list
-          description: Format
+          description: Data type of the custom field
           enum:
           - string
           - text
@@ -12573,53 +12600,68 @@ components:
           - flag
         regexp:
           type: string
-          description: Regular expression
+          description: Regular expression to be applied to the entry in the custom field
+          example: ([+]?\d{1,3}[. \s]?)?(\d{9}?)
         min_length:
           type: integer
-          description: Minimum length
+          description: Minimum length of the entry in the custom field
+          example: 3
         max_length:
           type: integer
-          description: Maximum length
+          description: Maximum length of the entry in the custom field
+          example: 15
         is_required:
           type: boolean
-          description: Required
+          description: Whether the field is required
+          example: true
         is_for_all:
           type: boolean
-          description: For all projects
+          description: Whether the field will be visible in all projects
+          example: true
         is_filter:
           type: boolean
-          description: Used as a filter
+          description: Whether the field can be usesed as a filter
+          example: true
         position:
           type: integer
           example: 2
           description: Position of custom field in list
         searchable:
           type: boolean
-          description: is searchable ?
+          description: Whether the field can be used for search
+          example: true
         default_value:
           type: string
-          description: Default value
+          description: Default value of the field if not filled in
+          example: John Doe
         editable:
           type: boolean
-          description: Editable
+          description: Whether the field is editable
+          example: true
         visible:
           type: boolean
-          description: Visible
+          description: Whether the field is visible in forms
+          example: true
         multiple:
           type: boolean
-          description: Multiple values
+          description: Whether the field can have multiple values
+          example: true
         description:
           type: string
-          description: Description
+          description: Description shown to the user
+          example: Custom identifier of the user within system
         is_primary:
           type: boolean
           description: Primary
+          example: true
         show_empty:
           type: boolean
           description: Show with empty fields
+          example: true
         show_on_list:
           type: boolean
           description: Show in list
+          example: true
         settings:
           type: string
           description: Its Hash object
@@ -12628,7 +12670,7 @@ components:
           description: ''
         show_on_more_form:
           type: boolean
-          example: 'true'
+          example: true
           description: Show as additional attribute
         easy_external_id:
           type: string
@@ -12643,14 +12685,14 @@ components:
           description: ''
         mail_notification:
           type: boolean
-          example: 'true'
+          example: true
           description: Email notifications
         easy_group_id:
           type: integer
           description: ''
         clear_when_anonymize:
           type: boolean
-          description: Clear when anonymize
+          description: Whether the field should be clear due to data anonymization (e.g. GDPR requests for data deletion)
         type:
           type: string
           example: IssueCustomField
@@ -12678,17 +12720,17 @@ components:
           readOnly: true
         non_deletable:
           type: boolean
-          example: 'false'
-          description: ''
+          example: false
+          description: Whether the value in the field cannot be deleted
           readOnly: true
         non_editable:
           type: boolean
-          example: 'false'
-          description: ''
+          example: false
+          description: Whether the field is not editable
           readOnly: true
         disabled:
           type: boolean
-          example: 'false'
+          example: false
           description: ''
           readOnly: true
         created_at:
@@ -12759,9 +12801,11 @@ components:
           - easy_computed_token
           - flag
           type: string
+          example: list
         value:
           description: value is based on field_format - can be Array, Boolean, Date
           type: string
+          example: Iron man
       xml:
         name: custom_field_value
     DocumentApiRequest:
