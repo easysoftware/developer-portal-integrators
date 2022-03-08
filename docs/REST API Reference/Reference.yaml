@@ -9740,12 +9740,17 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/search.{format}":
     get:
+      operationId: Search
       summary: Search
+      description: Use this method to search through the Easy project <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) in the <b>Path</b>. You can fill parameters in the Query to specify your request.<br/>
+        As a response, you can see the results of your search. <br/>
+        See the schema below.
       tags:
       - Search
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -9755,32 +9760,32 @@ paths:
           - xml
       - name: q
         in: query
-        description: Search query string
+        description: Search query string.
         example: man on the moon
         required: true
         schema:
           type: string
       - name: open_issues
         in: query
-        description: Search only open issues
+        description: Search only open issues.
         required: false
         schema:
           type: boolean
       - name: internal_users
         in: query
-        description: Search only internal users
+        description: Search only internal users.
         required: false
         schema:
           type: boolean
       - name: scope
         in: query
-        description: Project ID for search scope
+        description: Project ID for search scope.
         required: false
         schema:
           type: integer
       responses:
         '200':
-          description: ok
+          description: Results of the search.
           content:
             application/json:
               schema:
