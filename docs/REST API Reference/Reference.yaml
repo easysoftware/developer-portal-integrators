@@ -11312,13 +11312,17 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/time_entries.{format}":
     get:
-      summary: List of TimeEntries
-      description: For filtering send parameter `set_filter=1` and specify filters
+      summary: List of time enteries
+      operationId: ListOfTimeEnteries
+      description: Use this method to get list of time entries. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and in the <b>Path</b> and fill all parameters into the <b>Query</b>.<br/>
+        An object with all  time entries details  is returned in the API call response. <br/>
+        See the schema below.
       tags:
       - Time entry
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11327,23 +11331,23 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of current entity.
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        description: Enable filter through Easy Query.
         in: query
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: The number of items to be present in the response. Fefault is
+          25, maximum is 100.
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: The offset of the first object to retrieve.
         in: query
         schema:
           type: integer
@@ -11360,16 +11364,19 @@ paths:
                 properties:
                   total_count:
                     type: number
+                    description: Total count of time enteries.
                     example: 75
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: Time enteries offset.
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: Limit of list time enteries.
                     example: 25
                     xml:
                       attribute: true
@@ -11386,16 +11393,19 @@ paths:
                 properties:
                   total_count:
                     type: number
+                    description: Total count of time enteries.
                     example: 75
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: Time enteries offset.
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: Limit of list time enteries.
                     example: 25
                     xml:
                       attribute: true
@@ -11406,12 +11416,17 @@ paths:
         '401':
           description: not authorized
     post:
-      summary: Create TimeEntry
+      summary: Create time entry
+      operationId: CreateTimeEntry
+      description: Use this method to create new  time entry. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and in the <b>Path</b> and fill all parameters into the <b>Body</b>.<br/>
+        As a response, you can see the result of your new time entry with all possible parameters.. <br/>
+        See the schema below.
       tags:
       - Time entry
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11420,7 +11435,7 @@ paths:
           - json
           - xml
       requestBody:
-        description: Create TimeEntry
+        description: Create new time entry.
         required: true
         content:
           application/json:
@@ -11434,7 +11449,7 @@ paths:
               "$ref": "#/components/schemas/TimeEntryApiRequest"
       responses:
         '201':
-          description: created
+          description: Time entry was created.
           content:
             application/json:
               schema:
@@ -11523,12 +11538,17 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
-      summary: Update TimeEntry
+      summary: Update time entry
+      description: Use this method to update details about time entry. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the time entry (id) in the <b>Path</b>.<br/>
+        An object with all possible details about time entry is returned in the API call response. <br/>
+        See the schema below.
+      operationId: UpdateTimeEntry
       tags:
       - Time entry
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11538,12 +11558,12 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of TimeEntry
+        description: ID of the time entry. 
         required: true
         schema:
           type: integer
       requestBody:
-        description: Update given TimeEntry
+        description: Parameters to update time entry.
         required: true
         content:
           application/json:
@@ -11557,7 +11577,7 @@ paths:
               "$ref": "#/components/schemas/TimeEntryApiRequest"
       responses:
         '200':
-          description: updated
+          description: Time entry was updated.
           content:
             application/json:
               schema:
@@ -11595,12 +11615,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy TimeEntry
+      summary: Delete time entry
+      operationId: DeleteTimeEntry
+      description: Use this method to delete time entry. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the time entry (id) in the <b>Path</b>.<br/>
       tags:
       - Time entry
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11610,13 +11633,13 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of TimeEntry
+        description: ID of the time entry.
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Time entry was deleted.
         '401':
           description: not authorized
         '403':
@@ -12708,10 +12731,11 @@ components:
       properties:
         id:
           type: integer
+          description: ID of the custom field.
           example: 1
         value:
-          example: Iron Man
-          description: value is based on field_format - can be Array, Boolean, Date
+          example: Your value.
+          description: Value is based on field_format - can be Array, Boolean or Date.
           type: string
       xml:
         name: custom_field_value
@@ -19545,39 +19569,47 @@ components:
       properties:
         project_id:
           type: integer
+          description: ID of the project.
         issue_id:
           type: integer
+          description: ID of the issue.
         user_id:
           type: integer
+          description: ID of the user.
         priority_id:
           type: integer
+          description: ID of the priority. 
         activity_id:
           type: integer
+          description: ID of the activity.
         easy_external_id:
           type: string
+          description: ID of the Easy external.
         hours:
           example: '8'
-          description: Amount of spent hours
+          description: Amount of spent hours.
           type: string
         spent_on:
           format: date
           example: '2019-07-09'
-          description: Date of spent time. It can be limited by global setting
+          description: Date of spent time. It can be limited by global setting.
           type: string
         comments:
-          example: I work very hard
+          example: I work mostly at the night.
           type: string
         easy_is_billable:
           type: boolean
+          description: True/false decision if you want to invoice the work. 
         easy_billed:
           type: boolean
+          description: True/false decision if your work was invoiced by Easy.
         custom_fields:
           type: array
           items:
             "$ref": "#/components/schemas/CustomFieldValueApiRequest"
         tag_list:
           type: array
-          description: List of tags associated with entity
+          description: List of tags associated with entity.
           example:
           - deployment
           - gantt
