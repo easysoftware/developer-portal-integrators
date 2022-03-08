@@ -105,18 +105,25 @@ tags:
 paths:
   "/attachments/{id}.{format}":
     get:
-      summary: Get an Attachment
+      summary: Get attachment
       tags:
       - Attachment
+      operationId: getAttachment
+      description: 
+        Use this method to get an attachment based on your specification. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and enter an ID of attachment (<i>id</i>) in the <b>Path</b>. <br/>
+        Also, enter in the <b>Header</b> your preferred security format. <br/>
+        An object with all possible parameters is returned in the API call response. See the schema below.<br/>
       parameters:
       - name: id
         in: path
-        description: ID of Attachment
+        description: ID of the attachment.
         required: true
         schema:
           type: integer
+        example: 1931
       - name: format
-        description: specify format of response
+        description: Specify format of response. Only allowed values are .json and .xml.
         in: path
         required: true
         schema:
@@ -126,27 +133,43 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of Attachment
+          description: Details of the attachment
           content:
             application/json:
               schema:
                 type: object
                 properties:
                   attachment:
-                    "$ref": "#/components/schemas/AttachmentApiResponse"
+                    "$ref": "#/components/schemas/AttachmentResponse"
             application/xml:
               schema:
-                "$ref": "#/components/schemas/AttachmentApiResponse"
+                "$ref": "#/components/schemas/AttachmentResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '429':
-          description: rate limiting exceeded
+          description: Rate limiting exceeded.
           content:
             application/json:
               schema:
@@ -155,12 +178,18 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy Attachment
+      summary: Delete an attachment
       tags:
       - Attachment
+      operationId: deleteAttachment
+      description: Use this API call to simply delete the attachment. <br/>
+        To successfully call a method, specify the format of response <i>format</i> and enter an ID of attachment (<i>id</i>) in the <b>Path</b>. <br/>
+        Also, enter in the <b>Header</b> your preferred security format. <br/>
+        This API call returns only the status <b>204</b> and an OK message. <br/>
+        Before using this method, check that you have system permissions to use DELETE methods.
       parameters:
       - name: format
-        description: specify format of response
+        description:  Specify format of response. Only allowed values are .json and .xml.
         in: path
         required: true
         schema:
@@ -168,23 +197,40 @@ paths:
           enum:
           - json
           - xml
+        example: json
       - name: id
         in: path
-        description: ID of Attachment
+        description: ID of Attachment.
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: OK. Attachment was deleted.
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '429':
           description: rate limiting exceeded
           content:
@@ -199,8 +245,15 @@ paths:
       summary: Upload file to server
       tags:
       - Attachment
+      operationId: uploadFileToServer
+      description: 
+       Use this method to upload file to server. <br/>
+       To successfully call a method, specify format of response (<i> format</i> ) in the <b>Path</b>. <br/> 
+       Request <b>Body</b> is the file content. <br/>
+       Also, enter in the <b>Header</b> your preferred security format. <br/> 
+       This API method returns <b>201</b> status with several paramethers. Check description bellow.
       requestBody:
-        description: Request body is the file content
+        description: Request body is the file content.
         required: true
         content:
           application/octet-stream:
@@ -209,7 +262,7 @@ paths:
               format: binary
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of response. Only allowed values are .json and .xml.
         in: path
         required: true
         schema:
@@ -219,7 +272,7 @@ paths:
           - xml
       responses:
         '201':
-          description: created
+          description: Succesfully upload.
           content:
             application/json:
               schema:
@@ -231,13 +284,29 @@ paths:
               schema:
                 "$ref": "#/components/schemas/UploadResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '422':
           description: unprocessable entity
           content:
@@ -11812,17 +11881,22 @@ paths:
   "/users/{id}.{format}":
     get:
       summary: Get User
+      operationId: GetUser
+      description: Use this method to get user. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the user (<i>id</i>) in the <b>Path</b> and explicitly specify the associations you want to be included in the query result (<i>include</i>) into the <b>Query</b></b>.<br/>
+        An object with all possible parameters is returned in the API call response. <br/>
+        See the schema below.
       tags:
       - User
       parameters:
       - name: id
         in: path
-        description: ID of User
+        description: ID of the user.
         required: true
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -11832,10 +11906,9 @@ paths:
           - xml
       - name: include
         description: |-
-          explicitly specify the associations you want to be included in the query result (separated by a comma)
-
-          * **groups** (groups which user is in)
-          * **memberships** (list of projects which is user in role)
+          Explicitly specify the associations you want to be included in the query result (separated by a comma):
+          * **Groups** (*groups which user is in*)
+          * **Memberships** (*list of projects which is user in role*)
         in: query
         schema:
           type: array
@@ -11846,7 +11919,7 @@ paths:
             - memberships
       responses:
         '200':
-          description: detail of User
+          description: Details of the user.
           content:
             application/json:
               schema:
@@ -11858,13 +11931,29 @@ paths:
               schema:
                 "$ref": "#/components/schemas/UserApiResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '429':
           description: rate limiting exceeded
           content:
@@ -11989,12 +12078,15 @@ paths:
   "/versions.{format}":
     get:
       summary: List of Versions
-      description: For filtering send parameter `set_filter=1` and specify filters
+      description: Use this method to get list of all versions details. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the version (<i>id</i>) in the <b>Path</b> and specify parameters into the <b>Query</b>.<br/>
+        An object with all possible parameters is returned in the API call response. <br/>
+        See the schema below.
       tags:
       - Version
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -12003,23 +12095,23 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter of the current entity.
         in: query
         schema:
           type: string
       - name: set_filter
-        description: enable filter through Easy Query
+        description: Enable or disable filter through Easy Query.
         in: query
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: The number of items to be present in the response. Default value is
+          25, maximum is 100.
         in: query
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: The offset of the first object to retrieve.
         in: query
         schema:
           type: integer
@@ -12036,16 +12128,19 @@ paths:
                 properties:
                   total_count:
                     type: number
+                    description: "Total count of the versions."
                     example: 75
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: "Versions offset count."
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: "Versions limit count."
                     example: 25
                     xml:
                       attribute: true
@@ -12080,21 +12175,30 @@ paths:
                     items:
                       "$ref": "#/components/schemas/VersionApiResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
   "/versions/{id}.{format}":
     get:
       summary: Get Version
+      operationId: GetVersionDetails
+      description:  Use this method to get current version details. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the version (<i>id</i>) in the <b>Path</b>.<br/>
+        An object with all possible parameters is returned in the API call response. <br/>
+        See the schema below.
       tags:
       - Version
       parameters:
       - name: id
         in: path
-        description: ID of Version
+        description: ID of the version.
         required: true
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify format of response.
         in: path
         required: true
         schema:
@@ -12104,7 +12208,7 @@ paths:
           - xml
       responses:
         '200':
-          description: detail of Version
+          description: Details of the version.
           content:
             application/json:
               schema:
@@ -12116,15 +12220,31 @@ paths:
               schema:
                 "$ref": "#/components/schemas/VersionApiResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '429':
-          description: rate limiting exceeded
+          description: Rate limiting exceeded.
           content:
             application/json:
               schema:
@@ -12134,11 +12254,16 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update Version
+      operationId: UpdateFormat
+      description: Use this method to update version details. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the version (<i>id</i>) in the <b>Path</b> and all paramethers you want to update into the <b>Header</b>.<br/>
+        An object with all possible parameters is returned in the API call response. <br/>
+        See the schema below.
       tags:
       - Version
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -12148,7 +12273,7 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of Version
+        description: ID of the version.
         required: true
         schema:
           type: integer
@@ -12179,13 +12304,29 @@ paths:
               schema:
                 "$ref": "#/components/schemas/VersionApiResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '422':
           description: unprocessable entity
           content:
@@ -12205,12 +12346,15 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy Version
+      summary: Delete Version
+      operationId: DeleteVersion
+      description: Use this method to delete version details. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the version (<i>id</i>) in the <b>Path</b><br/>
       tags:
       - Version
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of the response.
         in: path
         required: true
         schema:
@@ -12220,21 +12364,37 @@ paths:
           - xml
       - name: id
         in: path
-        description: ID of Version
+        description: ID of the version.
         required: true
         schema:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Successfully deleted.
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '429':
           description: rate limiting exceeded
           content:
@@ -12246,12 +12406,17 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
   "/projects/{project_id}/versions.{format}":
     post:
+      operationId: CreateVersion
       summary: Create Version
+      description: Use this method to create version. <br/>
+        To successfully call a method, specify the format of response (<i>format</i>) and ID of the project for the new milestone (<i>project_id</i>) in the <b>Path</b> and fill your paramethers into the <b>Body</b>. <br/>
+        An object with all possible parameters is returned in the API call response. <br/>
+        See the schema below.
       tags:
       - Version
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify format of response.
         in: path
         required: true
         schema:
@@ -12261,7 +12426,7 @@ paths:
           - xml
       - name: project_id
         in: path
-        description: ID of the project for the new milestone
+        description: ID of the project for the new milestone.
         required: true
         schema:
           type: string
@@ -12280,7 +12445,7 @@ paths:
               "$ref": "#/components/schemas/VersionApiRequest"
       responses:
         '201':
-          description: created
+          description: New version was created.
           content:
             application/json:
               schema:
@@ -12292,15 +12457,31 @@ paths:
               schema:
                 "$ref": "#/components/schemas/VersionApiResponse"
         '401':
-          description: not authorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error401"
+          description: "Not authorized. Check your current system permissions."
         '403':
-          description: not authorized to access this resource
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error403"
+          description: "Not authorized to access this resource. Check your current system permissions."
         '404':
-          description: not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error404"
+          description: "The request could not be processed because resorce was not found."
         '406':
-          description: not allowed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error406"
+          description: "Request was not be acceptable."
         '422':
-          description: unprocessable entity
+          description: Unprocessable entity.
           content:
             application/json:
               schema:
@@ -12309,7 +12490,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
         '429':
-          description: rate limiting exceeded
+          description: Rate limiting exceeded.
           content:
             application/json:
               schema:
@@ -12319,31 +12500,39 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
 components:
   schemas:
-    Attachment:
+    AttachmentResponse:
       properties:
         id:
           type: integer
           readOnly: true
           example: 1
+          description: "ID of the attachment."
         filename:
           example: service-agreement.odt
           type: string
+          description: "Filename of the attachment."
         filesize:
           type: integer
-          example: '451564'
+          example: 48
+          description: "Filesize of the attachment."
         content_type:
           example: application/vnd.oasis.opendocument.text
           type: string
+          description: "Type of the attachment content."
         content_url:
           format: uri
           type: string
+          description: "Content URL."
         description:
           type: string
+          example: "This is attachment xxx."
+          description: "Attachment description."
         href_url:
           format: uri
           type: string
+          description: "Atachment URL in the HREF format."
         thumbnail_url:
-          description: if attachment is a thumbnailable? (its image?)
+          description: // NA OBJASNĚNÍ // if attachment is a thumbnailable? (its image?)
           format: uri
           type: string
         author:
@@ -12352,10 +12541,17 @@ components:
           properties:
             id:
               type: integer
-            name: {}
+              description: "Author ID."
+              example: 11183
+            name: 
+              type: string
+              description: "Name of the author."
+              example: "User_Name"
         created_on:
           format: date-time
           type: string
+          description: "Date and time when an attachment was created."
+          example: "2012-04-21T18:25:43-05:00"
       xml:
         name: attachment
     AttachmentApiResponse:
@@ -12404,12 +12600,12 @@ components:
       properties:
         name:
           type: string
-          example: auta
-          description: Name of custom field
+          example: "Your custom field name."
+          description: Name of the custom field.
         field_format:
           type: string
-          example: list
-          description: Format
+          example: user
+          description: "Format of the custom field. Choose from the list bellow."
           enum:
           - string
           - text
@@ -12439,66 +12635,76 @@ components:
           - flag
         regexp:
           type: string
-          description: Regular expression
+          description: Regular expression.
         min_length:
           type: integer
-          description: Minimum length
+          description: Minimum length of the custom field.
         max_length:
           type: integer
-          description: Maximum length
+          description: Maximum length of the custom field.
         is_required:
           type: boolean
-          description: Required
+          description: "Choose if the custom field is required or not"
+          example: true
         is_for_all:
           type: boolean
-          description: For all projects
+          description: "Choose if the custom field is for all or not."
+          example: true
         is_filter:
           type: boolean
-          description: Used as a filter
+          description: "Choose if the custom field is used as filter."
+          example: true
         position:
           type: integer
           example: 2
-          description: Position of custom field in list
+          description: "Position of custom field in list."
         searchable:
           type: boolean
-          description: is searchable ?
+          description: "Choose if the custom field is searchable."
+          example: true
         default_value:
           type: string
-          description: Default value
+          description: Custom field default value.
         editable:
           type: boolean
-          description: Editable
+          description: "Choose if the custom field is editable."
+          example: true
         visible:
           type: boolean
-          description: Visible
+          description: "Choose if the custom field is editable."
+          example: true
         multiple:
           type: boolean
-          description: Multiple values
+          description: "Choose if is possible to use multiple values."
+          example: true
         description:
           type: string
-          description: Description
+          description: "Custom field description."
         is_primary:
           type: boolean
-          description: Primary
+          description: "Choose if the custom field is primary or not."
+          example: true
         show_empty:
           type: boolean
-          description: Show with empty fields
+          description: "Choose if the custom field will be show as empty fields."
+          example: true
         show_on_list:
           type: boolean
-          description: Show in list
+          description: "Choose if custom field is show on list."
+          example: true
         settings:
           type: string
           description: Its Hash object
         internal_name:
           type: string
-          description: ''
+          description: "Custom field internal name."
         show_on_more_form:
           type: boolean
-          example: 'true'
-          description: Show as additional attribute
+          example: true
+          description: Choose if custom field is show as additional attribute.
         easy_external_id:
           type: string
-          description: ''
+          description: "Easy external ID of the custom fields."
         easy_min_value:
           type: number
           format: float
@@ -12509,8 +12715,8 @@ components:
           description: ''
         mail_notification:
           type: boolean
-          example: 'true'
-          description: Email notifications
+          example: true
+          description: Choose if the mail notification will be send to you.
         easy_group_id:
           type: integer
           description: ''
@@ -12708,10 +12914,11 @@ components:
       properties:
         id:
           type: integer
+          description: "ID of the custom field."
           example: 1
         value:
-          example: Iron Man
-          description: value is based on field_format - can be Array, Boolean, Date
+          example: My custom field.
+          description: Value is based on field_format - can be Array, Boolean, Date.
           type: string
       xml:
         name: custom_field_value
@@ -12719,6 +12926,7 @@ components:
       properties:
         id:
           type: integer
+          description: ""
           readOnly: true
           example: 1
         name:
@@ -12760,7 +12968,7 @@ components:
           - flag
           type: string
         value:
-          description: value is based on field_format - can be Array, Boolean, Date
+          description: Value is based on field_format - can be Array, Boolean or Date.
           type: string
       xml:
         name: custom_field_value
@@ -18275,6 +18483,78 @@ components:
           items:
             type: string
             example: cannot be blank
+    Error401: 
+      properties:
+        statusCode:
+          example: 401
+          description: "401"
+          type: number
+        errorCode:
+          example: access.unauthorized
+          description: "Access missing or invalid."
+          type: string
+        message: 
+          example: "Not authorized. Check your current system permissions."
+          description: "Not authorized. Check your current system permissions."
+          type: string
+      required:
+        - statusCode
+        - message
+      type: object
+    Error403: 
+      properties:
+        statusCode:
+          example: 403
+          description: "403"
+          type: number
+        errorCode:
+          example: access.unauthorized
+          description: "Access missing or invalid."
+          type: string
+        message: 
+          example: "Not authorized to access this resource. Check your current system permissions."
+          description: "Not authorized to access this resource. Check your current system permissions."
+          type: string
+      required:
+        - statusCode
+        - message
+      type: object
+    Error404: 
+      properties:
+        statusCode:
+          example: 404
+          description: "404"
+          type: number
+        errorCode:
+          example: not.found
+          description: "Access missing or invalid."
+          type: string
+        message: 
+          example: "The request could not be processed because resorce was not found."
+          description: "The request could not be processed because resorce was not found."
+          type: string
+      required:
+        - statusCode
+        - message
+      type: object
+    Error406:
+      properties:
+        statusCode:
+          example: 406
+          description: "406"
+          type: number
+        errorCode:
+          example: not.acceptable
+          description: "Request was not be acceptable."
+          type: string
+        message:
+          example: "Request was not be acceptable."
+          description: "Request was not be acceptable."
+          type: string
+      required:
+        - statusCode
+        - message
+      type: object
     GroupApiRequest:
       properties:
         easy_external_id:
@@ -18714,19 +18994,26 @@ components:
       properties:
         id:
           type: integer
+          description: "ID of the journal."
         user:
           type: object
           properties:
             id:
               type: integer
-            name: {}
+              description: "ID of the user."
+            name:
+              type: string
+              description: "Name of the user."
         notes:
           type: string
+          description: "Journal notes."
         created_on:
           format: date-time
+          description: "Date and time when journal was created."
           type: string
         private_notes:
           type: boolean
+          description: "Journal private notes."
         details:
           type: array
           xml:
@@ -18737,12 +19024,16 @@ components:
             properties:
               property:
                 type: string
+                description: "Journals property."
               name:
                 type: string
+                description: "Journals name."
               old_value:
                 type: string
+                description: "Journals old value."
               new_value:
                 type: string
+                description: "Journals new value."
       title: Journal
       type: object
       readOnly: true
@@ -19809,24 +20100,31 @@ components:
         id:
           type: integer
           readOnly: true
+          description: "ID of the user API."
           example: 1
         easy_external_id:
           example: external-system-1
           type: string
+          description: "External ID of the user API."
         login:
           example: admin
+          description: "User login name."
           type: string
         firstname:
+          description: "User firstname."
           example: Filip
           type: string
         lastname:
+          description: "User lastname."
           example: Moravek
           type: string
         mail:
+          description: "User email."
           format: email
           example: ceo@easy.cz
           type: string
         status:
+          description: "User status."
           type: integer
           example: 1
           enum:
@@ -19835,7 +20133,7 @@ components:
           - 3
         easy_system_flag:
           type: boolean
-          description: used for special operations, not human user
+          description: Used for special operations. Not for common user.
         easy_lesser_admin:
           type: boolean
           description: Partial administrator
@@ -19850,10 +20148,12 @@ components:
           properties:
             id:
               type: integer
+              description: "ID of the Easy user."
               xml:
                 attribute: true
             name:
               type: string
+              description: "Name of the Easy user."
               xml:
                 attribute: true
         supervisor_user:
@@ -19862,10 +20162,12 @@ components:
           properties:
             id:
               type: integer
+              description: "ID of the supervisor user."
               xml:
                 attribute: true
             name:
               type: string
+              description: "Name of the supervisor user."
               xml:
                 attribute: true
         custom_fields:
@@ -19876,7 +20178,7 @@ components:
             "$ref": "#/components/schemas/CustomFieldValueApiResponse"
         tag_list:
           type: array
-          description: List of tags associated with entity
+          description: List of tags associated with entity.
           example:
           - deployment
           - gantt
@@ -19886,13 +20188,15 @@ components:
         utc_offset:
           type: integer
           example: 3600
-          description: Time zone offset in seconds
+          description: Time zone offset in seconds.
           readOnly: true
         last_login_on:
           type: string
+          description: "Last date and time when user was login on."
           format: date-time
         avatar_url:
           type: string
+          description: "URL link to user avatar."
           format: uri
         working_time_calendar:
           type: object
@@ -19900,19 +20204,24 @@ components:
           properties:
             id:
               type: integer
+              description: "ID of the working calendar."
+              example: 12
             name:
               type: string
+              description: "Name of the working calendar."
+              example: My calendar
             default_working_hours:
               type: number
+              description: "Default working hours of the user."
               format: float
-              example: '8.0'
+              example: 8.0
             time_from:
               type: string
-              description: Time when work start
+              description: Time when the user start work.
               example: '09:00'
             time_to:
               type: string
-              description: Time when work end
+              description: Time when the user end work.
               example: '17:00'
         groups:
           type: array
@@ -19924,8 +20233,10 @@ components:
             properties:
               id:
                 type: integer
+                description: "ID of the group."
               name:
                 type: string
+                description: "Name of the group."
         memberships:
           type: array
           description: if you specify `include=memberships`
@@ -19937,13 +20248,16 @@ components:
             properties:
               id:
                 type: integer
+                description: "Membership ID."
               project:
                 type: object
                 properties:
                   id:
                     type: integer
+                    description: "Project ID."
                   name:
                     type: string
+                    description: "Project name."
               roles:
                 type: array
                 items:
@@ -19952,37 +20266,37 @@ components:
                   properties:
                     id:
                       type: integer
+                      description: "Role ID."
                     name:
                       type: string
+                      description: "Role name."
                     inherited:
                       type: boolean
-                      description: only if inherited_from.present?
         created_on:
           type: string
+          description: "Date and time when user was created."   "
           format: date-time
-          readOnly: true
+          readOnly: 
         updated_on:
           type: string
+          description: Date and time when user was updated.
           format: date-time
-          readOnly: true
-        easy_gantt_resources_estimated_ratio:
+          readOnly: truetrue
+    easy_gantt_resources_estimated_ratio:
           type: number
           format: float
-          description: "(available if the user is allowed to manage Easy Gantt Resource
-            user attributes)"
-          example: '1.0'
-        easy_gantt_resources_hours_limit:
+          example: 1.01.0'
+    easy_gantt_resources_hours_limit:
           type: number
           format: float
-          description: "(available if the user is allowed to manage Easy Gantt Resource
-            user attributes)"
-          example: '1.0'
+          description: Available if the user is allowed to manage Easy Gantt Resource user attributes.
+          example: 1.01.0'
         easy_gantt_resources_advance_hours_limits:
           type: array
           xml:
             wrapped: true
-          description: Should contain 7 values, one per each day of the week. (Available
-            if the user is allowed to manage Easy Gantt Resource user attributes.)
+          description: Should contain 7 values, one per each day of the wek. (Available
+            if the user is allowed to manage Easy Gantt Resource user attribues.)
           example:
           - 8
           - 8
@@ -19990,36 +20304,40 @@ components:
           - 8
           - 8
           - 0
-          - 0
-          items:
-            "$ref": "#/components/schemas/EasyGanttResourcesAdvanceHoursLimit"
-      xml:
-        name: user
+         user
     VersionApiRequest:
       properties:
         name:
-          example: Next step into the future
           type: string
+          description: "Name of the new API version."
+          example: "Your new API name."
         description:
-          example: ''
           type: string
+          description: "Description of your new API version."
+          example: "This is my new API version description."
         effective_date:
           format: date
           type: string
         due_date:
+          type: string
           format: date
-          type: string
+          description: "Date of the due date."
+          example: "2012-04-21"
         wiki_page_title:
-          example: ''
           type: string
+          description: "Wiki title of the new API version."
+          example: "New Wiki title."
         status:
+          type: string
+          description: "Status of your API version. You can choose from *open, locked* and *closed*."
           example: open
           enum:
           - open
           - locked
           - closed
-          type: string
         sharing:
+          type: string
+          description: "Choose sharing options. You can choose from *none, descendants, hierarchy, tree* and *system*."
           example: none
           enum:
           - none
@@ -20027,16 +20345,22 @@ components:
           - hierarchy
           - tree
           - system
-          type: string
         default_project_version:
           type: boolean
+          description: "Choose if you want use default project version."
+          example: true
         easy_external_id:
-          example: external-system-1
           type: string
+          description: "ID of Easy external system."
+          example: external-system-1
         project_id:
           type: integer
+          description: "ID of the project."
+          example: 1002
         easy_version_category_id:
           type: integer
+          description: "ID of Easy version category."
+          example: 1003
         custom_fields:
           type: array
           items:
@@ -20048,30 +20372,41 @@ components:
         id:
           type: integer
           readOnly: true
+          description: "ID of the API version."
           example: 1
         name:
-          example: Next step into the future
           type: string
+          description: "Your name of the API version"
+          example: "My API version name."
         description:
-          example: ''
           type: string
+          description: "Description of the API version."
+          example: "My API description."
         effective_date:
           format: date
           type: string
+          description: "Effective date of the API version."
+          example: 2021-10-12
         due_date:
           format: date
           type: string
+          description: "Due date of the API version."
+          example: 2021-05-15
         wiki_page_title:
-          example: ''
           type: string
+          description: "Title of the Wiki page."
+          example: "My Wiki title."
         status:
+          type: string
+          description: "Status of your API version. You can choose from *open, locked* and *closed*."
           example: open
           enum:
           - open
           - locked
           - closed
-          type: string
         sharing:
+          type: string
+          description: "Choose sharing options. You can choose from *none, descendants, hierarchy, tree* and *system*."
           example: none
           enum:
           - none
@@ -20079,22 +20414,26 @@ components:
           - hierarchy
           - tree
           - system
-          type: string
         default_project_version:
           type: boolean
+          description: "Choose if you want use default project version."
+          example: true
         easy_external_id:
-          example: external-system-1
           type: string
+          description: "ID of Easy external system."
+          example: external-system-1
         project:
           type: object
           readOnly: true
           properties:
             id:
               type: integer
+              description: "ID of the project."
               xml:
                 attribute: true
             name:
               type: string
+              description: "Name of the project."
               xml:
                 attribute: true
         easy_version_category:
@@ -20103,10 +20442,12 @@ components:
           properties:
             id:
               type: integer
+              description: "Easy version category ID."
               xml:
                 attribute: true
             name:
               type: string
+              description: "Easy version category name."
               xml:
                 attribute: true
         custom_fields:
@@ -20124,10 +20465,12 @@ components:
             "$ref": "#/components/schemas/JournalApiResponse"
         created_on:
           type: string
+          description: "Date and time when journals was created."
           format: date-time
           readOnly: true
         updated_on:
           type: string
+          description: "Date and time when journals was updated."
           format: date-time
           readOnly: true
       xml:
