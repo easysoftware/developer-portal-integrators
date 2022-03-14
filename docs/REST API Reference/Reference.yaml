@@ -1755,12 +1755,14 @@ paths:
   "/easy_contacts.{format}":
     get:
       summary: List of EasyContacts
-      description: For filtering send parameter `set_filter=1` and specify filters
+      operationId: getContacts
+      description: Use this endpoint to get list of contacts.<br/> 
+        For filtering send parameter `set_filter=1` and specify filters
       tags:
       - Easy contact
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1769,8 +1771,9 @@ paths:
           - json
           - xml
       - name: easy_query_q
-        description: free-text filter of current entity
+        description: Free-text filter for contacts
         in: query
+        example: John Doe
         schema:
           type: string
       - name: set_filter
@@ -1779,19 +1782,19 @@ paths:
         schema:
           type: boolean
       - name: limit
-        description: the number of items to be present in the response (default is
-          25, maximum is 100)
+        description: Limits the number of returned results. Minimum is 25, maximum is 100.
         in: query
+        example: 100
         schema:
           type: integer
       - name: offset
-        description: the offset of the first object to retrieve
+        description: Offset from the first record to retrieve
         in: query
+        example: 100
         schema:
           type: integer
       - name: include
-        description: |-
-          explicitly specify the associations you want to be included in the query result (separated by a comma)
+        description: explicitly specify the associations you want to be included in the query result (separated by a comma)
 
           * **author** (Include author)
         in: query
@@ -1803,7 +1806,7 @@ paths:
             - author
       responses:
         '200':
-          description: ok
+          description: Successfully retrieved the list of contacts
           content:
             application/json:
               schema:
@@ -1814,21 +1817,25 @@ paths:
                 properties:
                   total_count:
                     type: number
+                    description: Total number of results for the query
                     example: 75
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: Offset applied to the current query
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: Limit applied to the current query
                     example: 25
                     xml:
                       attribute: true
                   easy_contacts:
                     type: array
+                    description: List of objects containing contact details
                     items:
                       "$ref": "#/components/schemas/EasyContactApiResponse"
             application/xml:
@@ -1840,32 +1847,38 @@ paths:
                 properties:
                   total_count:
                     type: number
+                    description: Total number of results for the query
                     example: 75
                     xml:
                       attribute: true
                   offset:
                     type: number
+                    description: Offset applied to the current query
                     example: 0
                     xml:
                       attribute: true
                   limit:
                     type: number
+                    description: Limit applied to the current query
                     example: 25
                     xml:
                       attribute: true
                   easy_contacts:
                     type: array
+                    description: List of objects containing contact details
                     items:
                       "$ref": "#/components/schemas/EasyContactApiResponse"
         '401':
           description: not authorized
     post:
       summary: Create EasyContact
+      operationId: createContact
+      description: Use this endpoint to create a new contact.
       tags:
       - Easy contact
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1874,7 +1887,7 @@ paths:
           - json
           - xml
       requestBody:
-        description: Create EasyContact
+        description: Request body to create new EasyContact
         required: true
         content:
           application/json:
@@ -1888,7 +1901,7 @@ paths:
               "$ref": "#/components/schemas/EasyContactApiRequest"
       responses:
         '201':
-          description: created
+          description: Successfully created contact
           content:
             application/json:
               schema:
@@ -1928,6 +1941,8 @@ paths:
   "/easy_contacts/{id}.{format}":
     get:
       summary: Get EasyContact
+      description: Use this endpoint to retrieve a contact using its ID
+      operationId: getContact
       tags:
       - Easy contact
       parameters:
@@ -1938,7 +1953,7 @@ paths:
         schema:
           type: integer
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -1960,7 +1975,7 @@ paths:
             - author
       responses:
         '200':
-          description: detail of EasyContact
+          description: Successfully retrieved EasyContact
           content:
             application/json:
               schema:
@@ -1990,11 +2005,13 @@ paths:
                 "$ref": "#/components/schemas/ErrorModel"
     put:
       summary: Update EasyContact
+      description: Use this endpoint to update EasyContact.
+      operationId: updateContact
       tags:
       - Easy contact
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -2009,7 +2026,7 @@ paths:
         schema:
           type: integer
       requestBody:
-        description: Update given EasyContact
+        description: Request body to update EasyContact
         required: true
         content:
           application/json:
@@ -2023,7 +2040,7 @@ paths:
               "$ref": "#/components/schemas/EasyContactApiRequest"
       responses:
         '200':
-          description: updated
+          description: Successfully update EasyContact
           content:
             application/json:
               schema:
@@ -2061,12 +2078,14 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorModel"
     delete:
-      summary: Destroy EasyContact
+      summary: Delete EasyContact
+      description: Uset this endpoint to delete EasyContact using its ID
+      operationId: deleteContact
       tags:
       - Easy contact
       parameters:
       - name: format
-        description: specify format of response
+        description: Specify the format of the response
         in: path
         required: true
         schema:
@@ -2082,7 +2101,7 @@ paths:
           type: integer
       responses:
         '204':
-          description: ok
+          description: Successfully deleted EasyContact
         '401':
           description: not authorized
         '403':
@@ -13265,36 +13284,40 @@ components:
         organization:
           example: Easy Software s.r.o.
           type: string
+          description: Company name
         street:
-          example: Prague
-          description: Street
+          example: New street 123
+          description: Company headquarter street name
           type: string
         city:
           example: Prague
-          description: Country
+          description: Company headquarter city name
           type: string
         country_code:
           example: CZ
-          description: Country
+          description: Company headquarter country code
           type: string
         subdivision_code:
           example: CN
           description: Subdivision
           type: string
         postal_code:
-          example: '16000'
-          description: Postal code
+          example: CZ16000
+          description: Company headquarter postal code
           type: string
         registration_no:
           readOnly: true
+          description: Company registration number
+          example: CZ12344999
           type: string
         vat_no:
           example: CZ26426269
           type: string
+          description: Tax registration number of the company
         vat_rate:
           type: number
-          example: '22'
-          description: "% vat"
+          example: 22
+          description: VAT rate of the company where it's headquartered
         email:
           example: supdaniel@seznam.cz
           format: email
@@ -13305,11 +13328,11 @@ components:
           type: string
         bank_account:
           example: 164578953494/2700
-          description: Bank account
+          description: Company's bank account number (czech format)
           type: string
         iban:
           example: CZ420800000000045466101292
-          description: International Bank Account Number
+          description: Company's International Bank Account Number
           type: string
         variable_symbol:
           example: '601924858'
@@ -13317,7 +13340,7 @@ components:
           type: string
         swift:
           example: ING8NL2A
-          description: Society for Worldwide Interbank Financial Telecommunication
+          description: Company's bank code within SWIFT system (Society for Worldwide Interbank Financial Telecommunication)
           type: string
         bic:
           example: CFZCZPPAXXX
@@ -13331,39 +13354,43 @@ components:
           type: integer
           readOnly: true
           example: 1
+          description: ID of the billing information of a company
         organization:
           example: Easy Software s.r.o.
           type: string
+          description: Company name
         street:
-          example: Prague
-          description: Street
+          example: New Street 123
+          description: Company headquarter street name
           type: string
         city:
           example: Prague
-          description: Country
+          description: Company headquarter city name
           type: string
         country_code:
           example: CZ
-          description: Country
+          description: Company headquarter country code
           type: string
         subdivision_code:
           example: CN
           description: Subdivision
           type: string
         postal_code:
-          example: '16000'
-          description: Postal code
+          example: CZ16000
+          description: Company headquarter postal code
           type: string
         registration_no:
           readOnly: true
           type: string
+          description: Company registration number
         vat_no:
           example: CZ26426269
           type: string
+          description: Tax registration number of the company
         vat_rate:
           type: number
-          example: '22'
-          description: "% vat"
+          example: 22
+          description: VAT rate of the company where it's headquartered
         email:
           example: supdaniel@seznam.cz
           format: email
@@ -13374,11 +13401,11 @@ components:
           type: string
         bank_account:
           example: 164578953494/2700
-          description: Bank account
+          description: Company's bank account number (czech format)
           type: string
         iban:
           example: CZ420800000000045466101292
-          description: International Bank Account Number
+          description: Company's International Bank Account Number
           type: string
         variable_symbol:
           example: '601924858'
@@ -13386,7 +13413,7 @@ components:
           type: string
         swift:
           example: ING8NL2A
-          description: Society for Worldwide Interbank Financial Telecommunication
+          description: Company's bank code within SWIFT system (Society for Worldwide Interbank Financial Telecommunication)
           type: string
         bic:
           example: CFZCZPPAXXX
@@ -13622,23 +13649,24 @@ components:
       properties:
         author_note:
           type: string
+          example: Your note
           description: Comments
         firstname:
           type: string
           example: John
-          description: First name
+          description: Contact's first name
         lastname:
           type: string
           example: Smith
-          description: Last name
+          description: Contact's last name
         account_opened:
           type: string
-          example: '2020-05-15'
+          example: 2020-05-15
           format: date
-          description: Date when account became a client
+          description: Datetime when account became a client
         account_closed:
           type: string
-          example: '2020-05-15'
+          example: 2020-05-15
           format: date
           description: Date when client left us
         easy_contact_status_id:
@@ -13651,10 +13679,14 @@ components:
           type: integer
         easy_external_id:
           type: string
+          description: ID of the user in external system
+          example: c66f84d1-fcb5-4974-8a6a-0d03fa9a454a
         easy_avatar_url:
           type: string
         website:
           type: string
+          example: easysoftware.com
+          description: Contact's company website
         is_global:
           type: boolean
         referencable:
@@ -13670,13 +13702,15 @@ components:
         easy_supplier_company_id:
           type: integer
           description: ID of supplier company (EasySupplierCompany)
-          example: '42'
+          example: 42
         custom_fields:
           type: array
+          description: List of custom fields related to the contact
           items:
             "$ref": "#/components/schemas/CustomFieldValueApiRequest"
         primary_easy_billing_info_attributes:
           type: object
+          description: Object of contact's company billing information
           "$ref": "#/components/schemas/EasyBillingInfoApiRequest"
         contact_easy_billing_info_attributes:
           type: object
@@ -13692,6 +13726,7 @@ components:
             type: string
         guid:
           format: uuid
+          description: Internal contact GUID, used within Easy Software
           example: 7d7225cf-e786-445c-b504-f2d96d11e8ac
           type: string
         type_id:
@@ -13710,25 +13745,27 @@ components:
           type: integer
           readOnly: true
           example: 1
+          description: Contact internal ID
         author_note:
           type: string
+          example: Your comment
           description: Comments
         firstname:
           type: string
           example: John
-          description: First name
+          description: Contact's first name
         lastname:
           type: string
           example: Smith
-          description: Last name
+          description: Contact's last name
         account_opened:
           type: string
-          example: '2020-05-15'
+          example: 2020-05-15
           format: date
-          description: Date when account became a client
+          description: Datetime when account became a client
         account_closed:
           type: string
-          example: '2020-05-15'
+          example: 2020-05-15
           format: date
           description: Date when client left us
         easy_contact_status:
@@ -13737,10 +13774,14 @@ components:
           properties:
             id:
               type: integer
+              description: ID of the contact status
+              example: 1
               xml:
                 attribute: true
             name:
               type: string
+              description: Name of the contact status
+              example: New contact
               xml:
                 attribute: true
         easy_contact_level:
@@ -13785,6 +13826,8 @@ components:
           type: string
         website:
           type: string
+          description: Contact's company website
+          example: easysoftware.com
         is_global:
           type: boolean
         referencable:
@@ -13847,6 +13890,7 @@ components:
                 attribute: true
         custom_fields:
           type: array
+          description: List of custom fields related to the contact
           xml:
             wrapped: true
           items:
@@ -13854,35 +13898,41 @@ components:
         organization:
           example: Easy Software s.r.o.
           type: string
+          description: Contact's organization
         street:
           example: Prague
-          description: Street
+          description: Company headquarter street name
           type: string
         city:
           example: Prague
-          description: Country
+          description: Company headquarter city name
           type: string
         country_code:
           type: string
+          example: CZ
+          description: Company headquarter country code
           readOnly: true
         subdivision_code:
           example: CN
           description: Subdivision
           type: string
         postal_code:
-          example: '16000'
-          description: Postal code
+          example: CZCZ16000
+          description: Company headquarter postal code
           type: string
         registration_no:
           readOnly: true
           type: string
+          example: CZ12344999
+          description: Company registration number
         vat_no:
           example: CZ26426269
           type: string
+          description: Taxes registration number of the company
         vat_rate:
           type: number
-          example: '22'
-          description: "% vat"
+          example: 22
+          description: VAT rate of the company where it's headquartered
         email:
           example: supdaniel@seznam.cz
           format: email
@@ -13893,11 +13943,11 @@ components:
           type: string
         bank_account:
           example: 164578953494/2700
-          description: Bank account
+          description: Company's bank account number (czech format)
           type: string
         iban:
           example: CZ420800000000045466101292
-          description: International Bank Account Number
+          description: Company's International Bank Account Number
           type: string
         variable_symbol:
           example: '601924858'
@@ -13905,7 +13955,7 @@ components:
           type: string
         swift:
           example: ING8NL2A
-          description: Society for Worldwide Interbank Financial Telecommunication
+          description: Company's bank code within SWIFT system (Society for Worldwide Interbank Financial Telecommunication)
           type: string
         bic:
           example: CFZCZPPAXXX
@@ -13913,6 +13963,7 @@ components:
           type: string
         billing_info:
           type: object
+          description: Billing information of the company
           "$ref": "#/components/schemas/EasyBillingInfoApiResponse"
         tag_list:
           type: array
@@ -13925,28 +13976,33 @@ components:
             type: string
         eu_member:
           type: boolean
+          description: Whether the company is headquarter within European union
           readOnly: true
         author:
           type: object
           readOnly: true
-          description: If you pass `include=author` in request parameters
+          description: Object containing information of who created the contact. Shown only if you pass `include=author` in request parameters
           properties:
             id:
               type: integer
+              description: ID of the author of the contact
+              example: 15
             name:
               type: string
+              description: Name of the author of the contact
+              example: John Doe
         guid:
           type: string
           example: 3169464e-3115-4884-a01f-c61fbd6cf145
           readOnly: true
         latitude:
           type: number
-          example: '41.681'
+          example: 41.681
           format: float
           readOnly: true
         longitude:
           type: number
-          example: '44.0287'
+          example: 44.0287
           format: float
           readOnly: true
         time_zone:
@@ -13956,14 +14012,18 @@ components:
           readOnly: true
         score:
           type: integer
-          example: ''
+          example: 95
           readOnly: true
         fullname:
           type: string
+          description: Contact's full name
           example: John Smith
           readOnly: true
         account_duration:
           type: number
+          description: Calculated value in days of how long the contact has been a client.<br/>
+           For contacts who are still clients is the value counted from the value of `account_opened` until now. <br/>
+           For contacts who are not clients anymore is the value counted as difference between `account_opened` and `accound_closed`.
           readOnly: true
         expected_revenues_this_year:
           type: number
@@ -13973,13 +14033,19 @@ components:
           readOnly: true
         lifetime_revenues:
           type: number
+          description: Revenue gained through the lifetime of the contact.
           readOnly: true
+          example: 1000000
         created_on:
           type: string
           format: date-time
+          description: Datetime when the contact was created
+          example: 2001-12-15T02:59:43.1Z
           readOnly: true
         updated_on:
           type: string
+          description: Datetime when the contact was updated
+          example: 2001-12-15T02:59:43.1Z
           format: date-time
           readOnly: true
       xml:
