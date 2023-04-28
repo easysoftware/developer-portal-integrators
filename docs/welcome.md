@@ -1,6 +1,8 @@
 # Welcome to section for Integrators
-Welcome to Integrators section. Here you onboarding journey into Easy Software begins!
 
-In the following articles you will get familiar with REST API, how to autheticate and we will provide you with REST API reference.
+Here your onboarding journey into Easy Software begins!
 
-Please navigate to the section you want to learn more about from the menu on the left handside.
+The following articles will get you familiar with our APIs, how to authenticate and query data. The last two sections
+contain the full swagger API reference for our REST-like API.
+
+Please navigate to the section you want to learn more about from the menu on the left hand side.
